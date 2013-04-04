@@ -1,5 +1,5 @@
 (function() {
-  var async, conn, fs, mustache, mysql, path, _;
+  var async, conn, connectionObj, fs, host, mustache, mysql, password, path, port, user, _;
 
   fs = require('fs');
 
@@ -13,11 +13,25 @@
 
   mysql = require('mysql');
 
-  conn = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: ''
-  });
+  host = process.env.OPENSHIFT_MYSQL_DB_HOST || 'localhost';
+
+  port = process.env.OPENSHIFT_MYSQL_DB_PORT || null;
+
+  user = process.env.OPENSHIFT_MYSQL_DB_USERNAME || 'root';
+
+  password = process.env.OPENSHIFT_MYSQL_DB_PASSWORD || '';
+
+  connectionObj = {
+    host: host,
+    user: user,
+    password: password
+  };
+
+  if (process.env.OPENSHIFT_MYSQL_DB_HOST) {
+    connectionObj.port = port;
+  }
+
+  conn = mysql.createConnection(connectionObj);
 
   conn.connect();
 
