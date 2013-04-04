@@ -1,164 +1,153 @@
-#!/bin/env node
-//  OpenShift sample Node application
-var express = require('express');
-var fs      = require('fs');
+(function() {
+  var app, dslActionHelper, express, fs, http, ip, isNull, path, port, server, util, _;
 
+  express = require('express');
 
-/**
- *  Define the sample application.
- */
-var SampleApp = function() {
+  http = require('http');
 
-    //  Scope.
-    var self = this;
+  fs = require("fs");
 
+  path = require("path");
 
-    /*  ================================================================  */
-    /*  Helper functions.                                                 */
-    /*  ================================================================  */
+  _ = require("underscore");
 
-    /**
-     *  Set up server IP address and port # using env variables/defaults.
-     */
-    self.setupVariables = function() {
-        //  Set the environment variables we need.
-        self.ipaddress = process.env.OPENSHIFT_INTERNAL_IP;
-        self.port      = process.env.OPENSHIFT_INTERNAL_PORT || 8080;
+  util = require("util");
 
-        if (typeof self.ipaddress === "undefined") {
-            //  Log errors on OpenShift but continue w/ 127.0.0.1 - this
-            //  allows us to run/test the app locally.
-            console.warn('No OPENSHIFT_INTERNAL_IP var, using 127.0.0.1');
-            self.ipaddress = "127.0.0.1";
-        };
-    };
+  app = express();
 
+  server = http.createServer(app);
 
-    /**
-     *  Populate the cache.
-     */
-    self.populateCache = function() {
-        if (typeof self.zcache === "undefined") {
-            self.zcache = { 'index.html': '' };
+  dslActionHelper = require('./businesslayer/dslActionHelper');
+
+  GLOBAL.actionDictionary = {};
+
+  GLOBAL.appId = "447275615345245";
+
+  GLOBAL.appSecret = "39ee3fe876d6f33d399ccdc1642fea3a";
+
+  GLOBAL.audioscrobbler_api_key = "ab13e2a8580857bcd35728dd7f5e8c60";
+
+  GLOBAL.rooms = {};
+
+  dslActionHelper.compileAllDSLActions(function(actionDictionary) {
+    return GLOBAL.actionDictionary = actionDictionary;
+  });
+
+  app.configure(function() {
+    var requestValues, singlePage;
+    requestValues = require('./middleware/requestValues');
+    singlePage = require('./middleware/singlePage');
+    app.engine("html", require("ejs").renderFile);
+    app.set("view options", {
+      layout: false
+    });
+    app.set("views", __dirname + "/public");
+    app.set("view engine", "ejs");
+    app.use(express.bodyParser());
+    app.use(express.cookieParser());
+    app.use(express["static"](__dirname + "/public"));
+    app.use(express.methodOverride());
+    app.use(singlePage({
+      indexPage: "index.html"
+    }));
+    app.use(requestValues());
+    return app.use(app.router);
+  });
+
+  ip = process.env.OPENSHIFT_NODEJS_IP || "127.0.0.1";
+
+  port = process.env.OPENSHIFT_NODEJS_PORT || 8080;
+
+  console.log("--------------------");
+
+  console.log(ip, port);
+
+  server.listen(port, ip);
+
+  app.get('/:action/:title?/:id?', function(req, res, next) {
+    var actionName, id, payload, queryStringJson;
+    actionName = req.params.action;
+    queryStringJson = qs.parse(url.parse(req.url).query);
+    _.extend(req.__data, queryStringJson);
+    payload = {};
+    id = req.params.id;
+    if ((id != null)) {
+      req.__data = id;
+    }
+    if (req.params.title) {
+      actionName = req.params.title;
+    }
+    req.actionName = actionName;
+    return dslActionHelper.executeAction(req, res, actionName, function(err, resultSet) {
+      var view;
+      if (err) {
+        return next(err);
+      } else {
+        payload.data = req.__returnData;
+        if ((req.__data.params != null)) {
+          payload.data.params = req.__data.params;
         }
-
-        //  Local cache for static content.
-        self.zcache['index.html'] = fs.readFileSync('./index.html');
-    };
-
-
-    /**
-     *  Retrieve entry (content) from cache.
-     *  @param {string} key  Key identifying content to retrieve from cache.
-     */
-    self.cache_get = function(key) { return self.zcache[key]; };
-
-
-    /**
-     *  terminator === the termination handler
-     *  Terminate server on receipt of the specified signal.
-     *  @param {string} sig  Signal to terminate on.
-     */
-    self.terminator = function(sig){
-        if (typeof sig === "string") {
-           console.log('%s: Received %s - terminating sample app ...',
-                       Date(Date.now()), sig);
-           process.exit(1);
+        view = actionName;
+        if (req.__data.view != null) {
+          if (typeof req.__data.view === 'string') {
+            view = req.__data.view;
+          } else {
+            if (payload.data.items != null) {
+              if (payload.data.items.length > 1) {
+                view = req.__data.view.listing;
+              } else {
+                view = req.__data.view.details;
+              }
+            } else {
+              view = actionName;
+            }
+          }
         }
-        console.log('%s: Node server stopped.', Date(Date.now()) );
-    };
-
-
-    /**
-     *  Setup termination handlers (for exit and a list of signals).
-     */
-    self.setupTerminationHandlers = function(){
-        //  Process on exit and signals.
-        process.on('exit', function() { self.terminator(); });
-
-        // Removed 'SIGPIPE' from the list - bugz 852598.
-        ['SIGHUP', 'SIGINT', 'SIGQUIT', 'SIGILL', 'SIGTRAP', 'SIGABRT',
-         'SIGBUS', 'SIGFPE', 'SIGUSR1', 'SIGSEGV', 'SIGUSR2', 'SIGTERM'
-        ].forEach(function(element, index, array) {
-            process.on(element, function() { self.terminator(element); });
+        return fs.readFile("public/templates/" + view + ".html", "ascii", function(err, htmlView) {
+          return res.json({
+            view: htmlView,
+            payload: payload
+          });
         });
-    };
+      }
+    });
+  });
 
+  app.post('/post/:name/:id?', function(req, res, next) {
+    var actionName, id, payload;
+    actionName = req.params.name;
+    payload = {};
+    id = req.params.id;
+    if ((id != null)) {
+      req.__data.id = id;
+    }
+    return dslActionHelper.executeAction(req, res, actionName, function(err, resultSet) {
+      if (err) {
+        return next(err);
+      } else {
+        payload.data = req.__returnData;
+        return res.json({
+          action: req.__data.nextAction,
+          payload: payload
+        }, 200);
+      }
+    });
+  });
 
-    /*  ================================================================  */
-    /*  App server functions (main app logic here).                       */
-    /*  ================================================================  */
+  String.prototype.replaceAll = function(replaceThis, withThis) {
+    return this.replace(new RegExp(replaceThis, "g"), withThis);
+  };
 
-    /**
-     *  Create the routing table entries + handlers for the application.
-     */
-    self.createRoutes = function() {
-        self.routes = { };
+  String.prototype.trim = function() {
+    return this.replace(/^\s\s*/, "").replace(/\s\s*$/, "");
+  };
 
-        // Routes for /health, /asciimo and /
-        self.routes['/health'] = function(req, res) {
-            res.send('1');
-        };
+  isNull = function(obj) {
+    if (obj === null || typeof obj === "undefined") {
+      return true;
+    } else {
+      return false;
+    }
+  };
 
-        self.routes['/asciimo'] = function(req, res) {
-            var link = "http://i.imgur.com/kmbjB.png";
-            res.send("<html><body><img src='" + link + "'></body></html>");
-        };
-
-        self.routes['/'] = function(req, res) {
-            res.setHeader('Content-Type', 'text/html');
-            res.send(self.cache_get('index.html') );
-        };
-    };
-
-
-    /**
-     *  Initialize the server (express) and create the routes and register
-     *  the handlers.
-     */
-    self.initializeServer = function() {
-        self.createRoutes();
-        self.app = express.createServer();
-
-        //  Add handlers for the app (from the routes).
-        for (var r in self.routes) {
-            self.app.get(r, self.routes[r]);
-        }
-    };
-
-
-    /**
-     *  Initializes the sample application.
-     */
-    self.initialize = function() {
-        self.setupVariables();
-        self.populateCache();
-        self.setupTerminationHandlers();
-
-        // Create the express server and routes.
-        self.initializeServer();
-    };
-
-
-    /**
-     *  Start the server (starts up the sample application).
-     */
-    self.start = function() {
-        //  Start the app on the specific interface (and port).
-        self.app.listen(self.port, self.ipaddress, function() {
-            console.log('%s: Node server started on %s:%d ...',
-                        Date(Date.now() ), self.ipaddress, self.port);
-        });
-    };
-
-};   /*  Sample Application.  */
-
-
-
-/**
- *  main():  Main code.
- */
-var zapp = new SampleApp();
-zapp.initialize();
-zapp.start();
-
+}).call(this);

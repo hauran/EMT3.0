@@ -1,3 +1,28 @@
+/*********************** MIGRATE SERVERS ***********************/
+
+1) copy database
+
+ssh root@everyonesmixtape.com
+R*h*5
+cd /var/www/vhosts/everyonesmixtape.com/httpdocs
+mysqldump -u admin -p everyonesmixtape > EMT.sql
+
+
+2) copy sql file to new server
+
+scp  EMT.sql 5158984fe0b8cd023800021b@EMT-geniot.rhcloud.com:/var/lib/openshift/5158984fe0b8cd023800021b/app-root/repo               
+
+3)  source sql
+EMT
+mysql
+use EMT
+\. /var/lib/openshift/5158984fe0b8cd023800021b/app-root/repo/EMT.sql
+
+
+/***************************************************************/
+
+
+
 MySQL 5.1 database added.  Please make note of these credentials:
 
    Root User: admin1r3dG3Q

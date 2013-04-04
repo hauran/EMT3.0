@@ -1,0 +1,20 @@
+{{#data}}
+	<h1>Everyone's Mixtape</h1>
+	<div class='section clear'>
+		<h2>Most Played Today</h2>
+		<ul>
+			{{#most_played}}
+				<li>{{> mix}}</li>
+			{{/most_played}}
+		</ul>
+	</div>
+
+	<div class='section clear'>
+		<h2>Most Collected</h2>
+		<ul>
+			{{#most_collected}}
+				<li>{{> mix}}</li>
+			{{/most_collected}}
+		</ul>
+	</div>
+{{/data}}

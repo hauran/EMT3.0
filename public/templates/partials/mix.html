@@ -1,0 +1,15 @@
+<div class='mix' id='card_{{mixId}}' data-id='{{mixId}}'>
+	<div class='image'></div>
+	<div class='details'>
+		{{mixName}}
+	</div>
+</div>
+
+
+<script>
+	{{#tracks}}
+		var id =  EMT.YT.getCode('{{url}}');
+		$("#card_{{mixId}} .image").css("background-image","url(http://i.ytimg.com/vi/"  + id + "/0.jpg)");
+	{{/tracks}}
+</script>
+

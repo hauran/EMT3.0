@@ -1,0 +1,1 @@
+select 1 from user limit 1;
