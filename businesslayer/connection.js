@@ -39,7 +39,6 @@
     return fs.readFile("db/" + templateName + ".sql", "ascii", function(err, dbRun) {
       var dbScript;
       dbScript = mustache.render(dbRun, req.__data);
-      console.log(dbScript);
       conn.query("use EMT");
       return conn.query(dbScript, function(err, rows, fields) {
         if (err) {

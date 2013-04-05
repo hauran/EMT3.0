@@ -31,7 +31,6 @@ conn.connect()
 exports.runScript = (templateName, req, callback) ->
 	fs.readFile "db/" + templateName + ".sql", "ascii", (err, dbRun) ->
 		dbScript = mustache.render(dbRun, req.__data)
-		console.log(dbScript)
 		conn.query "use EMT"
 		conn.query dbScript, (err, rows, fields) ->
 		  if (err) 
