@@ -4,6 +4,7 @@ async = require("async")
 nodemailer = require("nodemailer")
 mustache = require('mustache')
 request = require('request')
+accounting = require('accounting')
 
 _.templateSettings = {
   interpolate : /\{\{(.+?)\}\}/g
@@ -16,8 +17,28 @@ exports.mixPartial =  (req, callback) ->
 		req.__returnData.partials = {}
 
 	req.__returnData.partials = _.extend req.__returnData.partials, {mix:mix_partial}
-	callback null, 1
+	callback null, {}
 
+exports.formatNumbers = (req, callback) ->
+	data = req.__returnData
+	if data.most_played
+		_.each data.most_played, (mix) ->
+			_.each mix.stats, (stats, index) ->
+				if stats[0].collected
+					stats[0].collected = accounting.formatNumber(stats[0].collected)
+					stats[0].plays = accounting.formatNumber(stats[0].plays)
+			mix.stats.splice(0,2)
+			mix.stats = _.flatten(mix.stats)
+
+		_.each data.most_collected, (mix) ->
+			_.each mix.stats, (stats, index) ->
+				if stats[0].collected
+					stats[0].collected = accounting.formatNumber(stats[0].collected)
+					stats[0].plays = accounting.formatNumber(stats[0].plays)
+			mix.stats.splice(0,2)
+			mix.stats = _.flatten(mix.stats)
+
+	callback null, {}
 
 # http://ws.audioscrobbler.com/2.0/?method=artist.getsimilar&api_key= + GLOBAL.audioscrobbler_api_key + &format=json&limit=' + mixLength + '&artist=' + q;
 

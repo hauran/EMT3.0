@@ -37,8 +37,7 @@ module.exports = function(grunt) {
           "public/lib/backbone/backbone.min.js",
           "public/lib/mustache.js",
           "public/lib/jquery.timeago.js",
-          "public/lib/jquery.dateformat.js",
-          "public/lib/jquery.masonry.min.js"
+          "public/lib/jquery.dateformat.js"
         ],
         dest: 'public/lib/EMT.libs.js'
       },
@@ -99,8 +98,8 @@ module.exports = function(grunt) {
         files: 'public/lib/*.css',
         tasks: 'concat:vendorcss'
       },
-      cachedPartials: {
-        files: 'public/templates/partials/*.html',
+      restartServer: {
+        files: ['public/templates/partials/*.html', 'dsl/*.json'],
         tasks: 'coffee:server'
       }
     }

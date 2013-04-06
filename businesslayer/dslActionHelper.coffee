@@ -198,7 +198,7 @@ executeChildSql = (req, parentSet, children, parentCounter, childCounter, callba
 			parent_row[propertyName] = childResultSet
 
 		childCounter++
-		if(childCounter==children.length)
+		if(childCounter == children.length)
 			childCounter = 0
 			parentCounter++
 

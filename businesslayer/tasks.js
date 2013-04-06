@@ -1,5 +1,5 @@
 (function() {
-  var async, fs, mix_partial, mustache, nodemailer, request, _;
+  var accounting, async, fs, mix_partial, mustache, nodemailer, request, _;
 
   fs = require('fs');
 
@@ -12,6 +12,8 @@
   mustache = require('mustache');
 
   request = require('request');
+
+  accounting = require('accounting');
 
   _.templateSettings = {
     interpolate: /\{\{(.+?)\}\}/g
@@ -26,7 +28,35 @@
     req.__returnData.partials = _.extend(req.__returnData.partials, {
       mix: mix_partial
     });
-    return callback(null, 1);
+    return callback(null, {});
+  };
+
+  exports.formatNumbers = function(req, callback) {
+    var data;
+    data = req.__returnData;
+    if (data.most_played) {
+      _.each(data.most_played, function(mix) {
+        _.each(mix.stats, function(stats, index) {
+          if (stats[0].collected) {
+            stats[0].collected = accounting.formatNumber(stats[0].collected);
+            return stats[0].plays = accounting.formatNumber(stats[0].plays);
+          }
+        });
+        mix.stats.splice(0, 2);
+        return mix.stats = _.flatten(mix.stats);
+      });
+      _.each(data.most_collected, function(mix) {
+        _.each(mix.stats, function(stats, index) {
+          if (stats[0].collected) {
+            stats[0].collected = accounting.formatNumber(stats[0].collected);
+            return stats[0].plays = accounting.formatNumber(stats[0].plays);
+          }
+        });
+        mix.stats.splice(0, 2);
+        return mix.stats = _.flatten(mix.stats);
+      });
+    }
+    return callback(null, {});
   };
 
   exports.processPosts = function(req, callback) {

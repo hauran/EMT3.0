@@ -19,18 +19,21 @@ password = process.env.OPENSHIFT_MYSQL_DB_PASSWORD || ''
 connectionObj = {
   host     : host,
   user     : user,
-  password : password
+  password : password,
+  multipleStatements:true
 }
 
 if (process.env.OPENSHIFT_MYSQL_DB_HOST)
 	connectionObj.port = port
 
 conn = mysql.createConnection(connectionObj)
+# conn = mysql.createConnection('mysql://' + user + ':' + password + '@' + host + '/EMT?flags=-TRANSACTIONS,-FOUND_ROWS,-MULTI_RESULTS,-PS_MULTI_RESULTS,-NO_SCHEMA,MULTI_STATEMENTS')
 conn.connect()
 
 exports.runScript = (templateName, req, callback) ->
 	fs.readFile "db/" + templateName + ".sql", "ascii", (err, dbRun) ->
 		dbScript = mustache.render(dbRun, req.__data)
+		# console.log dbScript
 		conn.query "use EMT"
 		conn.query dbScript, (err, rows, fields) ->
 		  if (err) 

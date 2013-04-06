@@ -24,7 +24,8 @@
   connectionObj = {
     host: host,
     user: user,
-    password: password
+    password: password,
+    multipleStatements: true
   };
 
   if (process.env.OPENSHIFT_MYSQL_DB_HOST) {

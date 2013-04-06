@@ -1,7 +1,14 @@
 <div class='mix' id='card_{{mixId}}' data-id='{{mixId}}'>
 	<div class='image'></div>
 	<div class='details'>
-		{{mixName}}
+		<strong>{{mixName}}</strong>
+		<div><a href="#">{{userName}}</a></div>
+		{{#stats}}
+			<div class='stats'>
+				<div><i class='icon-star'/> {{collected}} collected</div>
+				<div><i class='icon-play'/> {{plays}} plays</div>
+			</div>
+		{{/stats}}
 	</div>
 </div>
 

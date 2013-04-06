@@ -11,12 +11,17 @@
 	        "children":[
 	            {
 		          "query": {
-		           "sql": "get_tracks",
+		           "sql": "mix_tracks",
 		           "select": {
 		              "limit": 1
 		            }
 		          },
 		          "propertyName": "tracks",
+		          "joinColumn": "mixId"
+		        },
+		        {
+		          "query": "mix_stats",
+		          "propertyName": "stats",
 		          "joinColumn": "mixId"
 		        }
 	        ]
@@ -34,17 +39,23 @@
 	        "children":[
 	            {
 		          "query": {
-		           "sql": "get_tracks",
+		           "sql": "mix_tracks",
 		           "select": {
 		              "limit": 1
 		            }
 		          },
 		          "propertyName": "tracks",
 		          "joinColumn": "mixId"
+		        },
+		        {
+		          "query": "mix_stats",
+		          "propertyName": "stats",
+		          "joinColumn": "mixId"
 		        }
 	        ]
 	    },
 	    "propertyName":"most_collected"
   	}, 
+  	"tasks.formatNumbers",
   	"tasks.mixPartial"
  ]
