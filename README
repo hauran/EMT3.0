@@ -3,7 +3,6 @@ EMT 3.0
 
 
 
-
 Repo Layout
 ===========
 node_modules/                       - Any Node modules packaged with the app
