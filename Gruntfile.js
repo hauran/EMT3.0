@@ -46,7 +46,8 @@ module.exports = function(grunt) {
           'coffee/main.coffee',
           'coffee/socketio.coffee',
           'coffee/utils.coffee',
-          'coffee/YT.coffee'
+          'coffee/YT.coffee',
+          'coffee/mixCard.coffee'
         ],
         dest: 'coffee/cat/EMT.coffee'
       }
@@ -76,8 +77,17 @@ module.exports = function(grunt) {
         ]
       }
     },
-    mindirect: {
-      js: ['public/js/EMT.js', 'public/lib/EMT.libs.js']
+    uglify: {
+      js: {
+        files: {
+          'public/js/EMT.js': ['public/js/EMT.js']
+        }
+      },
+      lib: {
+        files: {
+          'public/lib/EMT.libs.js': ['public/lib/EMT.libs.js']
+        }
+      }
     },
     copy: {
     },
@@ -110,9 +120,10 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-coffee');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-mindirect');
+  grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-cssmin');
   grunt.loadNpmTasks('grunt-contrib-copy');
 
   grunt.registerTask('default', ['less:dev', 'concat:app', 'concat:vendor', 'concat:vendorcss', 'coffee:client', 'watch']);
-  grunt.registerTask('prod', ['less:dev', 'concat:vendorcss', 'cssmin', 'concat:app', 'concat:vendor', 'coffee:client', 'coffee:server', 'coffee:businesslayer']);
+  grunt.registerTask('prod', ['less:dev', 'concat:vendorcss', 'cssmin', 'concat:app', 'concat:vendor', 'coffee:client', 'coffee:server', 'coffee:businesslayer','uglify']);
 };

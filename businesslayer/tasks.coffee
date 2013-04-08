@@ -10,13 +10,22 @@ _.templateSettings = {
   interpolate : /\{\{(.+?)\}\}/g
 };
 
-mix_partial = fs.readFileSync "public/templates/partials/mix.html", "ascii"
+mixcard_partial = fs.readFileSync "public/templates/partials/mixcard.html", "ascii"
+mixcard_tracks_popover = fs.readFileSync "public/templates/partials/mixcard_tracks_popover.html", "ascii"
 
-exports.mixPartial =  (req, callback) ->
+
+exports.mixcardTracksPopoverPartial = (req,callback) ->
 	if(!req.__returnData.partials?)
 		req.__returnData.partials = {}
 
-	req.__returnData.partials = _.extend req.__returnData.partials, {mix:mix_partial}
+	req.__returnData.partials = _.extend req.__returnData.partials, {mixcard_tracks_popover:mixcard_tracks_popover}
+	callback null,{}
+
+exports.mixCardPartial =  (req, callback) ->
+	if(!req.__returnData.partials?)
+		req.__returnData.partials = {}
+
+	req.__returnData.partials = _.extend req.__returnData.partials, {mixcard:mixcard_partial}
 	callback null, {}
 
 exports.formatNumbers = (req, callback) ->
@@ -26,7 +35,11 @@ exports.formatNumbers = (req, callback) ->
 			_.each mix.stats, (stats, index) ->
 				if stats[0].collected
 					stats[0].collected = accounting.formatNumber(stats[0].collected)
-					stats[0].plays = accounting.formatNumber(stats[0].plays)
+
+					if parseInt(stats[0].plays) > 10000
+						stats[0].plays = Math.floor(parseInt(stats[0].plays)/1000) + 'k'
+					else
+						stats[0].plays = accounting.formatNumber(stats[0].plays)
 			mix.stats.splice(0,2)
 			mix.stats = _.flatten(mix.stats)
 
@@ -34,7 +47,11 @@ exports.formatNumbers = (req, callback) ->
 			_.each mix.stats, (stats, index) ->
 				if stats[0].collected
 					stats[0].collected = accounting.formatNumber(stats[0].collected)
-					stats[0].plays = accounting.formatNumber(stats[0].plays)
+
+					if parseInt(stats[0].plays) > 10000
+						stats[0].plays = Math.floor(parseInt(stats[0].plays)/1000) + 'k'
+					else
+						stats[0].plays = accounting.formatNumber(stats[0].plays)
 			mix.stats.splice(0,2)
 			mix.stats = _.flatten(mix.stats)
 

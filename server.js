@@ -72,7 +72,7 @@
     payload = {};
     id = req.params.id;
     if ((id != null)) {
-      req.__data = id;
+      req.__data.id = id;
     }
     if (req.params.title) {
       actionName = req.params.title;

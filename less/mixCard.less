@@ -1,0 +1,82 @@
+div.mixCard {
+	float:left;
+	margin:10px 10px 0px 0px;
+	border:1px solid #666;
+	.image{
+		background-color: #2C3E50;
+		width:240px;
+		height:180px;
+		background-size: contain;
+		background-repeat: no-repeat;
+		background-position:center; 
+	}
+	.details {
+		width:230px;
+		font-size: 12px;
+		padding:0px 5px 0px 5px;
+		border-top:1px solid #666;
+		.names{
+			div {
+				width: 180px;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+				&.mix-name{
+					font-size:13px;
+					font-weight: bold;
+				}
+			}
+			// max-width: 110px;
+			// overflow: hidden;
+			// text-overflow: ellipsis;
+			// white-space: nowrap;
+		}
+		.stats {
+
+		}
+	}
+}
+
+		
+.popover {
+	background-color: #2C3E50;
+	&.right {
+		margin-left: -113px;
+		// margin-top:-67px;
+		.arrow {
+			top:68px;
+			border-right-color: #2C3E50;
+		}
+	}
+	.popover-title {
+		display: none;
+	}
+	.popover-content {
+		max-height: 500px;
+		overflow: auto;
+		.mix-tracks li {
+			cursor: pointer;
+			margin-top:0px;
+			padding:3px 5px 3px 5px;
+			&:hover {
+				background-color: #54687d;
+			}
+			&.more {
+				font-size: 11px;
+				color:#fff;
+				div {
+					position: relative;
+					top: -2px;
+					display: inline;
+				}
+			}
+			a {
+				font-size: 12px;
+				color:#fff;
+			}
+		}
+		li.hide-after ~ li:not(.more) {
+			display:none;
+		}
+	}
+}

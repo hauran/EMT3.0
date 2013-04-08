@@ -52,7 +52,7 @@ app.get '/:action/:title?/:id?', (req, res, next) ->
   payload = {}
   id = req.params.id
   if (id?)
-    req.__data = id
+    req.__data.id = id
 
   if (req.params.title)
     actionName = req.params.title

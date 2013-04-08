@@ -1,0 +1,24 @@
+<div class='mixCard' id='card_{{mixId}}' data-id='{{mixId}}' data-toggle="popover" data-trigger="manual">
+	<div class='image'></div>
+	<div class='details'>
+		<div class='names pull-left'>
+			<div class='mix-name'>{{mixName}}</div>
+			<div><a href="#">{{userName}}</a></div>
+		</div>
+		{{#stats}}
+			<div class='stats pull-right'>
+				<div><i class='icon-play'/> {{plays}}</div>
+				<div><i class='icon-star'/> {{collected}}</div>
+			</div>
+		{{/stats}}
+	</div>
+</div>
+
+
+<script>
+	{{#tracks}}
+		var id =  EMT.YT.getCode('{{url}}');
+		$("#card_{{mixId}} .image").css("background-image","url(http://i.ytimg.com/vi/"  + id + "/0.jpg)");
+	{{/tracks}}
+</script>
+

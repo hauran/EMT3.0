@@ -1,5 +1,5 @@
 (function() {
-  var accounting, async, fs, mix_partial, mustache, nodemailer, request, _;
+  var accounting, async, fs, mixcard_partial, mixcard_tracks_popover, mustache, nodemailer, request, _;
 
   fs = require('fs');
 
@@ -19,14 +19,26 @@
     interpolate: /\{\{(.+?)\}\}/g
   };
 
-  mix_partial = fs.readFileSync("public/templates/partials/mix.html", "ascii");
+  mixcard_partial = fs.readFileSync("public/templates/partials/mixcard.html", "ascii");
 
-  exports.mixPartial = function(req, callback) {
+  mixcard_tracks_popover = fs.readFileSync("public/templates/partials/mixcard_tracks_popover.html", "ascii");
+
+  exports.mixcardTracksPopoverPartial = function(req, callback) {
     if (!(req.__returnData.partials != null)) {
       req.__returnData.partials = {};
     }
     req.__returnData.partials = _.extend(req.__returnData.partials, {
-      mix: mix_partial
+      mixcard_tracks_popover: mixcard_tracks_popover
+    });
+    return callback(null, {});
+  };
+
+  exports.mixCardPartial = function(req, callback) {
+    if (!(req.__returnData.partials != null)) {
+      req.__returnData.partials = {};
+    }
+    req.__returnData.partials = _.extend(req.__returnData.partials, {
+      mixcard: mixcard_partial
     });
     return callback(null, {});
   };
@@ -39,7 +51,11 @@
         _.each(mix.stats, function(stats, index) {
           if (stats[0].collected) {
             stats[0].collected = accounting.formatNumber(stats[0].collected);
-            return stats[0].plays = accounting.formatNumber(stats[0].plays);
+            if (parseInt(stats[0].plays) > 10000) {
+              return stats[0].plays = Math.floor(parseInt(stats[0].plays) / 1000) + 'k';
+            } else {
+              return stats[0].plays = accounting.formatNumber(stats[0].plays);
+            }
           }
         });
         mix.stats.splice(0, 2);
@@ -49,7 +65,11 @@
         _.each(mix.stats, function(stats, index) {
           if (stats[0].collected) {
             stats[0].collected = accounting.formatNumber(stats[0].collected);
-            return stats[0].plays = accounting.formatNumber(stats[0].plays);
+            if (parseInt(stats[0].plays) > 10000) {
+              return stats[0].plays = Math.floor(parseInt(stats[0].plays) / 1000) + 'k';
+            } else {
+              return stats[0].plays = accounting.formatNumber(stats[0].plays);
+            }
           }
         });
         mix.stats.splice(0, 2);

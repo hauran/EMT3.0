@@ -135,15 +135,7 @@ $(document).ready(function() {
   Backbone.history.start({
     pushState: true
   });
-  EMT.YT = new EMT.YouTube();
-  $(this).on('click', '.click-modal.show', function() {
-    $(this).removeClass('show');
-    return $('.mixCard').popover('hide');
-  });
-  return $(this).on('click', 'ul.mix-tracks li.more', function() {
-    $(this).remove();
-    return $('ul.mix-tracks li.hide-after').removeClass('hide-after');
-  });
+  return EMT.YT = new EMT.YouTube();
 });
 
 EMT.decodedCookie = function(cookieName) {

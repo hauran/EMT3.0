@@ -57,5 +57,5 @@
 	    "propertyName":"most_collected"
   	}, 
   	"tasks.formatNumbers",
-  	"tasks.mixPartial"
+  	"tasks.mixCardPartial"
  ]

@@ -1,23 +1,25 @@
-_ = require('underscore')
-tasks = require('../businesslayer/tasks')
-ajax = require('../businesslayer/ajaxRequest')
-Authentication = require('../businesslayer/authentication')
-url = require('url')
-qs = require('querystring')
-timeago = require('timeago')
+_ = require('underscore');
+tasks = require('../businesslayer/tasks');
+ajax = require('../businesslayer/ajaxRequest');
+Authentication = require('../businesslayer/authentication');
+url = require('url');
+qs = require('querystring');
 
 var noAuthReqPaths = [
-					'/coming_soon',
-					'/welcome',
-					'/facebookSignUp/',
-					'/facebookSignIn/',
-					'/login',
+					'coming_soon',
+					'welcome',
+					'facebookSignUp',
+					'facebookSignInå',
+					'login',
 					'/post/logon',
-					'/post/register_account',
-					'/join/signup',
-					'/join/register',
-					'/favicon.ico'
- 				]
+					'post/register_account',
+					'join/signup',
+					'join/register',
+					'favicon.ico',
+					'mix_tracks',
+					'mix'
+
+ 				];
 
 exports = module.exports = function requestValues() {
 	var _getAuthorizedEmail = function (authCode) {
@@ -49,10 +51,10 @@ exports = module.exports = function requestValues() {
 		var authCode = req.headers["authorization"];
 		req.__data = {};
 		req.__returnData = {};
-  		_.extend(req.__data, queryStringJson)
-  		_.extend(req.__data, req.body)
-
-  		if(_.indexOf(noAuthReqPaths, req.url) == -1) {
+		_.extend(req.__data, queryStringJson);
+		_.extend(req.__data, req.body);
+		root = req.url.split('/')[1];
+		if(_.indexOf(noAuthReqPaths, root) == -1) {
 			req.__data.auth = _getAuthorizedEmail(authCode);
 			if(!_.isUndefined(req.__data.auth) && req.__data.auth.email && req.__data.auth.email!=''){
 				Authentication.authenticate(req, function(err, results){

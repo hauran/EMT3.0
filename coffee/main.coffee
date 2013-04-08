@@ -94,10 +94,16 @@ EMT.PageRouter = Backbone.Router.extend {
 
 
 hammertime = $(document).hammer()
+
 $(document).ready  ->
 	EMT.pageRouter = new EMT.PageRouter()
 	Backbone.history.start {pushState: true}
-	EMT.YT = new EMT.YouTube();
-
-
+	EMT.YT = new EMT.YouTube()
 	
+	$(this).on 'click', '.click-modal.show', () ->
+		$(this).removeClass('show')
+		$('.mixCard').popover('hide')
+
+	$(this).on 'click', 'ul.mix-tracks li.more', () ->
+		$(this).remove();
+		$('ul.mix-tracks li.hide-after').removeClass('hide-after');
