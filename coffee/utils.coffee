@@ -15,8 +15,7 @@ EMT.post = (url, data, callback) ->
       cache: false,
       dataType:'json',
       type: 'POST',
-      success: callback,
-      timeout:60000
+      success: callback
     });
 
 EMT.get = (url, data, callback) ->
@@ -27,8 +26,7 @@ EMT.get = (url, data, callback) ->
       cache: false,
       dataType:'json',
       type: 'GET',
-      success: callback,
-      timeout: 60000
+      success: callback
     });
 
 EMT.AjaxCall = (action, data, dataType, type, callback) ->
@@ -39,8 +37,7 @@ EMT.AjaxCall = (action, data, dataType, type, callback) ->
 		cache: false,
 		dataType:dataType,
 		type: type,
-		success: callback,
-		timeout: 60000
+		success: callback
 	}
 
 EMT.phoneGapUrl = (url) ->
@@ -56,7 +53,7 @@ EMT.redoLayout = () ->
 	$('.content-modal').height($('#rightContent').height())
 
 $.ajaxSetup {
-	timeout: 30000
+	timeout: 60000
 	,beforeSend: (xhr) ->
 		if ($.cookie(EMT.LOGIN_COOKIE))
 			xhr.setRequestHeader "Authorization", "Basic " + $.cookie(EMT.LOGIN_COOKIE)
