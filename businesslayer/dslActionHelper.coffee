@@ -238,8 +238,8 @@ executeNextAction = (req, actionJson, counter, returnResultSet, callback) ->
 
 addResultsetToRequest = (req, propertyName, resultSet) ->
 	# console.log 'addResultsetToRequest', propertyName, resultSet
-	req.__returnData[propertyName] = resultSet
-	req.__returnData[propertyName + '_count'] = resultSet.length
 	if resultSet? and resultSet.length > 0 
+		req.__returnData[propertyName] = resultSet
+		req.__returnData[propertyName + '_count'] = resultSet.length
 		req.__data[propertyName] = resultSet 
 

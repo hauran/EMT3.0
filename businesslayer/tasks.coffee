@@ -10,9 +10,16 @@ _.templateSettings = {
   interpolate : /\{\{(.+?)\}\}/g
 };
 
-mixcard_partial = fs.readFileSync "public/templates/partials/mixcard.html", "ascii"
+mixcard = fs.readFileSync "public/templates/partials/mixcard.html", "ascii"
 mixcard_tracks_popover = fs.readFileSync "public/templates/partials/mixcard_tracks_popover.html", "ascii"
+mixcard_collection = fs.readFileSync "public/templates/partials/mixcard_collection.html", "ascii"
 
+exports.mixcard_collection_partial = (req, callback) ->
+	if(!req.__returnData.views?)
+		req.__returnData.views = {}
+
+	mixcard_collection_partial =  _.extend req.__returnData.views, {mixcard_collection:mixcard_collection,mixcard:mixcard}
+	callback null,{}
 
 exports.mixcardTracksPopoverPartial = (req,callback) ->
 	if(!req.__returnData.partials?)
@@ -30,30 +37,17 @@ exports.mixCardPartial =  (req, callback) ->
 
 exports.formatNumbers = (req, callback) ->
 	data = req.__returnData
-	if data.most_played
-		_.each data.most_played, (mix) ->
-			_.each mix.stats, (stats, index) ->
-				if stats[0].collected
-					stats[0].collected = accounting.formatNumber(stats[0].collected)
+	_.each data.collection, (mix) ->
+		_.each mix.stats, (stats, index) ->
+			if stats[0].collected
+				stats[0].collected = accounting.formatNumber(stats[0].collected)
 
-					if parseInt(stats[0].plays) > 10000
-						stats[0].plays = Math.floor(parseInt(stats[0].plays)/1000) + 'k'
-					else
-						stats[0].plays = accounting.formatNumber(stats[0].plays)
-			mix.stats.splice(0,2)
-			mix.stats = _.flatten(mix.stats)
-
-		_.each data.most_collected, (mix) ->
-			_.each mix.stats, (stats, index) ->
-				if stats[0].collected
-					stats[0].collected = accounting.formatNumber(stats[0].collected)
-
-					if parseInt(stats[0].plays) > 10000
-						stats[0].plays = Math.floor(parseInt(stats[0].plays)/1000) + 'k'
-					else
-						stats[0].plays = accounting.formatNumber(stats[0].plays)
-			mix.stats.splice(0,2)
-			mix.stats = _.flatten(mix.stats)
+				if parseInt(stats[0].plays) > 10000
+					stats[0].plays = Math.floor(parseInt(stats[0].plays)/1000) + 'k'
+				else
+					stats[0].plays = accounting.formatNumber(stats[0].plays)
+		mix.stats.splice(0,2)
+		mix.stats = _.flatten(mix.stats)
 
 	callback null, {}
 

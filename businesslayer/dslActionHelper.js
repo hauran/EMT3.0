@@ -207,9 +207,9 @@
   };
 
   addResultsetToRequest = function(req, propertyName, resultSet) {
-    req.__returnData[propertyName] = resultSet;
-    req.__returnData[propertyName + '_count'] = resultSet.length;
     if ((resultSet != null) && resultSet.length > 0) {
+      req.__returnData[propertyName] = resultSet;
+      req.__returnData[propertyName + '_count'] = resultSet.length;
       return req.__data[propertyName] = resultSet;
     }
   };

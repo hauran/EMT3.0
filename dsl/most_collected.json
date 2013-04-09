@@ -1,0 +1,32 @@
+[
+  	{
+    	"sqlFileList":{
+	        "parent":{
+	           "sql":"most_collected",
+	           "select":{
+	              "limit":5
+	           }
+	        },
+	        "children":[
+	            {
+		          "query": {
+		           "sql": "mix_tracks",
+		           "select": {
+		              "limit": 1
+		            }
+		          },
+		          "propertyName": "tracks",
+		          "joinColumn": "mixId"
+		        },
+		        {
+		          "query": "mix_stats",
+		          "propertyName": "stats",
+		          "joinColumn": "mixId"
+		        }
+	        ]
+	    },
+	    "propertyName":"collection"
+  	}, 
+  	"tasks.formatNumbers",
+  	"tasks.mixcard_collection_partial"
+ ]

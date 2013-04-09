@@ -80,7 +80,6 @@ EMT.PageRouter = Backbone.Router.extend {
 	_pageViewSetModel: (json) ->
 		$('#_EMT').html(Mustache.render(json.view, json.payload,json.payload.data.partials))
 		$(window).scrollTop(0)
-
 }
 
 (($) ->
@@ -99,11 +98,7 @@ $(document).ready  ->
 	EMT.pageRouter = new EMT.PageRouter()
 	Backbone.history.start {pushState: true}
 	EMT.YT = new EMT.YouTube()
-	
-	$(this).on 'click', '.click-modal.show', () ->
-		$(this).removeClass('show')
+
+	$(document).click () ->
 		$('.mixCard').popover('hide')
 
-	$(this).on 'click', 'ul.mix-tracks li.more', () ->
-		$(this).remove();
-		$('ul.mix-tracks li.hide-after').removeClass('hide-after');

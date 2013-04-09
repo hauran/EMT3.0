@@ -1,5 +1,5 @@
 (function() {
-  var accounting, async, fs, mixcard_partial, mixcard_tracks_popover, mustache, nodemailer, request, _;
+  var accounting, async, fs, mixcard, mixcard_collection, mixcard_tracks_popover, mustache, nodemailer, request, _;
 
   fs = require('fs');
 
@@ -19,9 +19,23 @@
     interpolate: /\{\{(.+?)\}\}/g
   };
 
-  mixcard_partial = fs.readFileSync("public/templates/partials/mixcard.html", "ascii");
+  mixcard = fs.readFileSync("public/templates/partials/mixcard.html", "ascii");
 
   mixcard_tracks_popover = fs.readFileSync("public/templates/partials/mixcard_tracks_popover.html", "ascii");
+
+  mixcard_collection = fs.readFileSync("public/templates/partials/mixcard_collection.html", "ascii");
+
+  exports.mixcard_collection_partial = function(req, callback) {
+    var mixcard_collection_partial;
+    if (!(req.__returnData.views != null)) {
+      req.__returnData.views = {};
+    }
+    mixcard_collection_partial = _.extend(req.__returnData.views, {
+      mixcard_collection: mixcard_collection,
+      mixcard: mixcard
+    });
+    return callback(null, {});
+  };
 
   exports.mixcardTracksPopoverPartial = function(req, callback) {
     if (!(req.__returnData.partials != null)) {
@@ -46,36 +60,20 @@
   exports.formatNumbers = function(req, callback) {
     var data;
     data = req.__returnData;
-    if (data.most_played) {
-      _.each(data.most_played, function(mix) {
-        _.each(mix.stats, function(stats, index) {
-          if (stats[0].collected) {
-            stats[0].collected = accounting.formatNumber(stats[0].collected);
-            if (parseInt(stats[0].plays) > 10000) {
-              return stats[0].plays = Math.floor(parseInt(stats[0].plays) / 1000) + 'k';
-            } else {
-              return stats[0].plays = accounting.formatNumber(stats[0].plays);
-            }
+    _.each(data.collection, function(mix) {
+      _.each(mix.stats, function(stats, index) {
+        if (stats[0].collected) {
+          stats[0].collected = accounting.formatNumber(stats[0].collected);
+          if (parseInt(stats[0].plays) > 10000) {
+            return stats[0].plays = Math.floor(parseInt(stats[0].plays) / 1000) + 'k';
+          } else {
+            return stats[0].plays = accounting.formatNumber(stats[0].plays);
           }
-        });
-        mix.stats.splice(0, 2);
-        return mix.stats = _.flatten(mix.stats);
+        }
       });
-      _.each(data.most_collected, function(mix) {
-        _.each(mix.stats, function(stats, index) {
-          if (stats[0].collected) {
-            stats[0].collected = accounting.formatNumber(stats[0].collected);
-            if (parseInt(stats[0].plays) > 10000) {
-              return stats[0].plays = Math.floor(parseInt(stats[0].plays) / 1000) + 'k';
-            } else {
-              return stats[0].plays = accounting.formatNumber(stats[0].plays);
-            }
-          }
-        });
-        mix.stats.splice(0, 2);
-        return mix.stats = _.flatten(mix.stats);
-      });
-    }
+      mix.stats.splice(0, 2);
+      return mix.stats = _.flatten(mix.stats);
+    });
     return callback(null, {});
   };
 

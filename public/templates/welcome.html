@@ -1,51 +1,38 @@
 {{#data}}
-	<h1>Everyone's Mixtape</h1>
-	<div class='section clear'>
-		<h2>Most Played Today</h2>
-		<ul>
-			{{#most_played}}
-				<li>{{> mixcard}}</li>
-			{{/most_played}}
-		</ul>
+	<div class='welcome'>
+		<h1>Everyone's Mixtape</h1>
+		<div class='section clear most-played'>
+			<h2>Most Played Today</h2>
+			<div>
+				<span class='loading'>Loading...</span>
+			</div>
+		</div>
+
+		<div class='section clear most-collected'>
+			<h2>Most Collected</h2>
+			<div>
+				<span class='loading'>Loading...</span>
+			</div>
+		</div>
 	</div>
 
-	<div class='section clear'>
-		<h2>Most Collected</h2>
-		<ul>
-			{{#most_collected}}
-				<li>{{> mixcard}}</li>
-			{{/most_collected}}
-		</ul>
-	</div>
 	<script>
-		// if mobile
-		// $('.mixCard').data('trigger','click');
-
-		$('.mixCard')
-			.on('click', function(){
-				var _this = this;
-				// $('.mixCard').popover('hide');
-				// setTimeout(function(){
-				$(_this).popover('show');
-				$('.click-modal').addClass('show');
-				EMT.get('/mix/mixcard_tracks_popover/' + $(_this).data('id'), {}, function(data){
-					var view = data.payload.data.partials.mixcard_tracks_popover;
-					var popover = $(_this).attr('data-content',Mustache.render(view, data.payload)).data('popover');
-					popover.setContent();
-					popover.$tip.addClass(popover.options.placement);
-					$('.popover-content ul li:nth-child(10)').addClass('hide-after');
-					$('.popover').css('top',($(_this).offset().top + 25) + 'px');
-
-					if($('.popover-content ul li:nth-child(11)')[0]){
-						$('<li class="more"><div><i class="icon-sort-down"/></div>more</li>').insertAfter('li.hide-after')
-					}
-				});
-			// },500);
-			})
-			.popover({
+		EMT.get('/mix/most_collected', {}, function(data){
+			$('.most-collected div').html(Mustache.render(data.payload.data.views.mixcard_collection, data.payload, data.payload.data.views))
+			$('.most-collected .mixCard').popover({
 				content:'Loading...',
 				html:true,
 				placement:'right'
-			})
+			});
+		});
+
+		EMT.get('/mix/most_played', {}, function(data){
+			$('.most-played div').html(Mustache.render(data.payload.data.views.mixcard_collection, data.payload, data.payload.data.views))
+			$('.most-played .mixCard').popover({
+				content:'Loading...',
+				html:true,
+				placement:'right'
+			});
+		});
 	</script>
 {{/data}}
