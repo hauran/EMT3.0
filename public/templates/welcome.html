@@ -1,38 +1,36 @@
-{{#data}}
-	<div class='welcome'>
-		<h1>Everyone's Mixtape</h1>
-		<div class='section clear most-played'>
-			<h2>Most Played Today</h2>
-			<div>
-				<span class='loading'>Loading...</span>
-			</div>
-		</div>
-
-		<div class='section clear most-collected'>
-			<h2>Most Collected</h2>
-			<div>
-				<span class='loading'>Loading...</span>
-			</div>
+<div class='welcome'>
+	<h1>Everyone's Mixtape</h1>
+	<div class='section clear most-played'>
+		<h2>Most Played Today</h2>
+		<div>
+			<span class='loading'>Loading...</span>
 		</div>
 	</div>
 
-	<script>
-		EMT.get('/mix/most_collected', {}, function(data){
-			$('.most-collected div').html(Mustache.render(data.payload.data.views.mixcard_collection, data.payload, data.payload.data.views))
-			$('.most-collected .mixCard').popover({
-				content:'Loading...',
-				html:true,
-				placement:'right'
-			});
-		});
+	<div class='section clear most-collected'>
+		<h2>Most Collected</h2>
+		<div>
+			<span class='loading'>Loading...</span>
+		</div>
+	</div>
+</div>
 
-		EMT.get('/mix/most_played', {}, function(data){
-			$('.most-played div').html(Mustache.render(data.payload.data.views.mixcard_collection, data.payload, data.payload.data.views))
-			$('.most-played .mixCard').popover({
-				content:'Loading...',
-				html:true,
-				placement:'right'
-			});
+<script>
+	EMT.get('/mix/most_collected', {}, function(data){
+		$('.most-collected div').html(Mustache.render(data.payload.data.views.mixcard_collection, data.payload, data.payload.data.views))
+		$('.most-collected .mixCard').popover({
+			content:'Loading...',
+			html:true,
+			placement:'right'
 		});
-	</script>
-{{/data}}
+	});
+
+	EMT.get('/mix/most_played', {}, function(data){
+		$('.most-played div').html(Mustache.render(data.payload.data.views.mixcard_collection, data.payload, data.payload.data.views))
+		$('.most-played .mixCard').popover({
+			content:'Loading...',
+			html:true,
+			placement:'right'
+		});
+	});
+</script>

@@ -15,7 +15,8 @@ EMT.post = (url, data, callback) ->
       cache: false,
       dataType:'json',
       type: 'POST',
-      success: callback
+      success: callback,
+      timeout:60000
     });
 
 EMT.get = (url, data, callback) ->
@@ -26,7 +27,8 @@ EMT.get = (url, data, callback) ->
       cache: false,
       dataType:'json',
       type: 'GET',
-      success: callback
+      success: callback,
+      timeout: 60000
     });
 
 EMT.AjaxCall = (action, data, dataType, type, callback) ->
@@ -37,7 +39,8 @@ EMT.AjaxCall = (action, data, dataType, type, callback) ->
 		cache: false,
 		dataType:dataType,
 		type: type,
-		success: callback
+		success: callback,
+		timeout: 60000
 	}
 
 EMT.phoneGapUrl = (url) ->
