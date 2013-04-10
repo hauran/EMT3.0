@@ -37,7 +37,8 @@ module.exports = function(grunt) {
           "public/lib/backbone/backbone.min.js",
           "public/lib/mustache.js",
           "public/lib/jquery.timeago.js",
-          "public/lib/jquery.dateformat.js"
+          "public/lib/jquery.dateformat.js",
+          "public/lib/jquery.hoverIntent.js"
         ],
         dest: 'public/lib/EMT.libs.js'
       },

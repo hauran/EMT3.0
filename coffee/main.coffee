@@ -6,6 +6,7 @@ EMT.partials = {}
 EMT.meId
 EMT.meEmail
 EMT.YT
+EMT.mixCard
 
 EMT.BaseView = Backbone.View.extend({});
 EMT.BaseModel = Backbone.Model.extend({});
