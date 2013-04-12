@@ -2,16 +2,42 @@ div.mixCard {
 	float:left;
 	margin:10px 10px 0px 0px;
 	border:1px solid #666;
+	width:18%;
+	min-width: 240px;
+	position: relative;
+	div.icon {
+		.opacity(0);
+		text-align: center;
+		position: absolute;
+	    left: 0;
+	    right: 0;
+		top:22%;
+		i.icon-play {
+			font-size:75px;
+			padding-top: 15px;
+			padding-left: 15px;
+			margin-left: 0px;
+			background-color: #95A5A6;
+			border-radius: 55px;
+			padding-bottom: 15px;		
+		}
+	}
+	&.hover{
+		div.icon {
+			.opacity(.75);
+		}
+	}
 	.image{
 		background-color: #2C3E50;
-		width:240px;
-		height:180px;
+		// width:240px;
+		// height:180px;
+		height: 0;
+    	padding-bottom: 75%;
 		background-size: contain;
 		background-repeat: no-repeat;
 		background-position:center; 
 	}
 	.details {
-		width:230px;
 		font-size: 12px;
 		padding:0px 5px 0px 5px;
 		border-top:1px solid #666;
@@ -41,13 +67,22 @@ div.mixCard {
 .popover {
 	background-color: #2C3E50;
 	&.right {
-		margin-left: -113px;
+		margin-left: 4px;
 		// margin-top:-67px;
 		.arrow {
-			top:68px;
+			top:118px;
 			border-right-color: #2C3E50;
 		}
 	}
+	&.left {
+		margin-left: 4px;
+		// margin-top:-67px;
+		.arrow {
+			top:118px;
+			border-left-color: #2C3E50;
+		}
+	}
+
 	.popover-title {
 		display: none;
 	}

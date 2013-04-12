@@ -5,11 +5,18 @@ mixcard = () ->
 		_this = @
 		setTimeout ( ->
 			if _this.hidePopover
-				$('.mixCard').popover('hide')
+				$('.mixCard').popover('hide').removeClass('hover')
 		), 500
-	@
+	@placement = () ->
+		$mixCard = $('.mixCard.hover')
+		rightPosOfPopOver = $mixCard.offset().left + $mixCard.width() + 250;
+		if(rightPosOfPopOver > $(window).width())
+				return 'left'
+		return 'right'
 
+	@
 EMT.mixCard = new mixcard()
+
 
 $(document).hoverIntent 
 	over: -> 
@@ -18,20 +25,23 @@ $(document).hoverIntent
 		,100
 		_this = @
 		if($(_this).siblings('.popover').length == 0)
-			$('.mixCard').popover('hide')
-			$(_this).popover('show')
-			$('.popover').css('top',($(_this).offset().top + 25) + 'px')
+			$('.mixCard').popover('hide').removeClass('hover')
 
+			$(_this).addClass('hover')
+			$(_this).popover('show')
+			$('.popover').css('top',($(_this).offset().top - 50) + 'px')
+			
 		EMT.get '/mix/mixcard_tracks_popover/' + $(_this).data('id'), {}, (data) ->
 			view = data.payload.data.partials.mixcard_tracks_popover
 			popover = $(_this).attr('data-content', Mustache.render(view, data.payload)).data('popover')
 			popover.setContent()
+
 			popover.$tip.addClass(popover.options.placement)
-			# $(_this).popover('show')
 			$('.popover-content ul li:nth-child(10)').addClass('hide-after')
 
 			if $('.popover-content ul li:nth-child(11)')[0]
 				$('<li class="more"><div><i class="icon-sort-down"/></div>more</li>').insertAfter('li.hide-after')
+	
 	out: (event)->
 		EMT.mixCard.hidePopover = true
 		EMT.mixCard.closePopover()
@@ -53,15 +63,18 @@ $(document).on 'mouseleave', '.popover', () ->
 # $(document).on 'click', '.mixCard', (event) ->
 # 	event.stopPropagation()
 # 	_this = @
-# 	$('.mixCard').popover('hide')
+# 	$('.mixCard').popover('hide').removeClass('hover')
+
+# 	$(_this).addClass('hover')
 # 	$(_this).popover('show')
+# 	$('.popover').css('top',($(_this).offset().top - 50) + 'px')
+
 # 	EMT.get '/mix/mixcard_tracks_popover/' + $(_this).data('id'), {}, (data) ->
 # 		view = data.payload.data.partials.mixcard_tracks_popover
 # 		popover = $(_this).attr('data-content', Mustache.render(view, data.payload)).data('popover')
 # 		popover.setContent()
 # 		popover.$tip.addClass(popover.options.placement)
 # 		$('.popover-content ul li:nth-child(10)').addClass('hide-after')
-# 		$('.popover').css('top',($(_this).offset().top + 25) + 'px')
 
 # 		if $('.popover-content ul li:nth-child(11)')[0]
 # 			$('<li class="more"><div><i class="icon-sort-down"/></div>more</li>').insertAfter('li.hide-after')

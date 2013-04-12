@@ -130,7 +130,7 @@
     sqlFileList = actionJson.sqlFileList;
     reqDataPropertyName = actionJson.propertyName;
     return executePartialSql(req, sqlFileList.parent, function(err, parentResultSet) {
-      var childCounter, joinColumnName, joinColumnValue, noData, parentCounter, propertyName;
+      var childCounter, noData, parentCounter;
       if (err) {
         return callback(err, null);
       } else {
@@ -141,12 +141,7 @@
         } else {
           noData = [];
           addResultsetToRequest(req, reqDataPropertyName, noData);
-          callback(null, noData);
-          propertyName = child.propertyName;
-          joinColumnName = child.joinColumn;
-          joinColumnValue = parent_row[joinColumnName];
-          req.__data[joinColumnName] = joinColumnValue;
-          return console.log(req.__data[joinColumnName]);
+          return callback(null, noData);
         }
       }
     });

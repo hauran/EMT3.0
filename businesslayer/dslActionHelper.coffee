@@ -175,13 +175,6 @@ processParentChildQuery = (actionJson, req, callback) ->
 				callback null, noData
 
 
-				
-				propertyName = child.propertyName
-				joinColumnName = child.joinColumn
-				joinColumnValue = parent_row[joinColumnName] 
-				req.__data[joinColumnName] = joinColumnValue
-				console.log req.__data[joinColumnName]
-
 executeChildSql = (req, parentSet, children, parentCounter, childCounter, callback) ->
 	parent_row = parentSet[parentCounter]
 	child = children[childCounter]
