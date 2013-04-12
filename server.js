@@ -64,7 +64,7 @@
 
   server.listen(port, ip);
 
-  app.get('/:action/:title?/:id?', function(req, res, next) {
+  app.get('/:action/:id?/:track?', function(req, res, next) {
     var actionName, id, payload, queryStringJson;
     actionName = req.params.action;
     queryStringJson = qs.parse(url.parse(req.url).query);
@@ -73,9 +73,6 @@
     id = req.params.id;
     if ((id != null)) {
       req.__data.id = id;
-    }
-    if (req.params.title) {
-      actionName = req.params.title;
     }
     req.actionName = actionName;
     return dslActionHelper.executeAction(req, res, actionName, function(err, resultSet) {

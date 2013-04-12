@@ -16,7 +16,7 @@
 </div>
 
 <script>
-	EMT.get('/mix/most_collected', {}, function(data){
+	EMT.get('/most_collected', {}, function(data){
 		$('.most-collected div').html(Mustache.render(data.payload.data.views.mixcard_collection, data.payload, data.payload.data.views))
 		$('.most-collected .mixCard').popover({
 			content:'Loading...',
@@ -25,7 +25,7 @@
 		});
 	});
 
-	EMT.get('/mix/most_played', {}, function(data){
+	EMT.get('/most_played', {}, function(data){
 		$('.most-played div').html(Mustache.render(data.payload.data.views.mixcard_collection, data.payload, data.payload.data.views))
 		$('.most-played .mixCard').popover({
 			content:'Loading...',

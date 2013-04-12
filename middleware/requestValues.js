@@ -16,7 +16,9 @@ var noAuthReqPaths = [
 					'join/signup',
 					'join/register',
 					'favicon.ico',
-					'mix_tracks',
+					'most_collected',
+					'most_played',
+					'mixcard_tracks_popover',
 					'mix'
 
  				];

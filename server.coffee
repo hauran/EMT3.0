@@ -45,7 +45,7 @@ server.listen port, ip
 
 
 
-app.get '/:action/:title?/:id?', (req, res, next) ->
+app.get '/:action/:id?/:track?', (req, res, next) ->
   actionName = req.params.action
   queryStringJson = qs.parse(url.parse(req.url).query)
   _.extend(req.__data, queryStringJson)
@@ -54,8 +54,8 @@ app.get '/:action/:title?/:id?', (req, res, next) ->
   if (id?)
     req.__data.id = id
 
-  if (req.params.title)
-    actionName = req.params.title
+  # if (req.params.title)
+  #   actionName = req.params.title
 
   req.actionName = actionName
 

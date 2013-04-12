@@ -58,22 +58,49 @@
   };
 
   exports.formatNumbers = function(req, callback) {
-    var data;
+    var data, stats;
     data = req.__returnData;
-    _.each(data.collection, function(mix) {
-      _.each(mix.stats, function(stats, index) {
-        if (stats[0].collected) {
-          stats[0].collected = accounting.formatNumber(stats[0].collected);
-          if (parseInt(stats[0].plays) > 10000) {
-            return stats[0].plays = Math.floor(parseInt(stats[0].plays) / 1000) + 'k';
-          } else {
-            return stats[0].plays = accounting.formatNumber(stats[0].plays);
+    if (data.collection) {
+      _.each(data.collection, function(mix) {
+        _.each(mix.stats, function(stats, index) {
+          if (stats[0].collected) {
+            stats[0].collected = accounting.formatNumber(stats[0].collected);
+            if (parseInt(stats[0].plays) > 10000) {
+              return stats[0].plays = Math.floor(parseInt(stats[0].plays) / 1000) + 'k';
+            } else {
+              return stats[0].plays = accounting.formatNumber(stats[0].plays);
+            }
           }
-        }
+        });
+        mix.stats.splice(0, 2);
+        return mix.stats = _.flatten(mix.stats);
       });
-      mix.stats.splice(0, 2);
-      return mix.stats = _.flatten(mix.stats);
-    });
+      delete req.__returnData.mix_stats;
+      delete req.__returnData.mix_stats_count;
+      delete req.__returnData.mix_tracks;
+      delete req.__returnData.mix_tracks_count;
+      delete req.__returnData.most_collected;
+      delete req.__returnData.most_collected_count;
+      delete req.__returnData.most_played;
+      delete req.__returnData.most_played_count;
+    }
+    if (data.stats) {
+      data.stats.splice(0, 2);
+      data.stats = _.flatten(data.stats);
+      stats = data.stats[0];
+      if (stats.collected) {
+        stats.collected = accounting.formatNumber(stats.collected);
+        if (parseInt(stats.plays) > 10000) {
+          stats.plays = Math.floor(parseInt(stats.plays) / 1000) + 'k';
+        } else {
+          stats.plays = accounting.formatNumber(stats.plays);
+        }
+      }
+      delete req.__returnData.mix_stats;
+      delete req.__returnData.mix_tracks;
+      delete req.__returnData.mix_stats_count;
+      delete req.__returnData.mix_tracks_count;
+    }
     return callback(null, {});
   };
 

@@ -70,7 +70,7 @@
           }
         });
       } else {
-        return executePartialSql(req, action, function(err, returnResultSet) {
+        return executePartialSql(req, action, function(err, resultSet) {
           if (err) {
             return handleError(req, err, callback);
           } else {

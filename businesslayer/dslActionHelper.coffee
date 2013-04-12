@@ -55,7 +55,7 @@ executeActionSequence = (req, actionJson, counter, returnResultSet, callback) ->
 				else
 					executeNextAction req, actionJson, counter, resultSet, callback
 		else #select query with sub selects/joins/where
-			executePartialSql req, action, (err, returnResultSet) ->
+			executePartialSql req, action, (err, resultSet) ->
 				if (err)
 					handleError req, err, callback
 				else
@@ -68,6 +68,7 @@ executeActionSequence = (req, actionJson, counter, returnResultSet, callback) ->
 
 
 executeDB = (req, action, callback) ->
+	# console.log action
 	if typeof action is 'object'
 		if(action.view?)
 			req.__data.view = action.view
@@ -113,67 +114,14 @@ processParentChildQuery = (actionJson, req, callback) ->
 		if (err)
 			callback err, null
 		else
-		
-			#for each parent row
-				#filter out all the child rows with a matching key
-				#stuff them in a named property
 			if parentResultSet.length > 0
-				# sqlFileList.children.forEach (child) ->
-				# 	propertyName = child.propertyName
-				# 	joinColumnName = child.joinColumn
-				# 	joinColumnValue = parentResultSet[0][joinColumnName] 
-				# 	req.__data[joinColumnName] = joinColumnValue #this is required as child queries uses this data in the where clause
-
-				# 	executePartialSql req, child.query, (err, childResultSet) ->
-				# 		if (err)
-				# 			callback err, null
-				# 		else
-				# 			parentResultSet.forEach (parent_row) ->
-				# 				console.log counter,  parent_row
-				# 				parent_row[propertyName] = _.filter childResultSet,
-				# 					(child_row) -> child_row[joinColumnName] == parent_row[joinColumnName]
-
-				# 			counter++
-				# 			if counter == sqlFileList.children.length
-				# 				if reqDataPropertyName?
-				# 					# add final resultset in the req.__data collection, if propertyName is provided in DSL.
-				# 					# this is to use the data for next step in the sequence
-				# 					addResultsetToRequest req, reqDataPropertyName, parentResultSet
-				# 				callback null, parentResultSet
-
 				parentCounter = 0;
 				childCounter = 0;
 				executeChildSql req, parentResultSet, sqlFileList.children, parentCounter, childCounter, callback
-				# 		executePartialSql req, child.query, (err, childResultSet) ->
-				# 			if (err)
-				# 				callback err, null
-				# 			else
-				# 				parent_row[propertyName] = childResultSet
-
-				# console.log "RETURN"
-				# callback null, parentResultSet
-
-				# async.eachSeries parentResultSet, (parent_row) ->
-				# 	async.eachSeries sqlFileList.children, (child) ->
-				# 		propertyName = child.propertyName
-				# 		joinColumnName = child.joinColumn
-				# 		joinColumnValue = parent_row[joinColumnName] 
-				# 		req.__data[joinColumnName] = joinColumnValue
-				# 		console.log req.__data[joinColumnName]
-				# 		executePartialSql req, child.query, (err, childResultSet) ->
-				# 			if (err)
-				# 				callback err, null
-				# 			else
-				# 				parent_row[propertyName] = childResultSet
-
-				# console.log "RETURN"
-				# callback null, parentResultSet
-
 			else
 				noData = []
 				addResultsetToRequest req, reqDataPropertyName, noData
 				callback null, noData
-
 
 executeChildSql = (req, parentSet, children, parentCounter, childCounter, callback) ->
 	parent_row = parentSet[parentCounter]

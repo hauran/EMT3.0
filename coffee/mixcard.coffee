@@ -30,8 +30,8 @@ $(document).hoverIntent
 			$(_this).addClass('hover')
 			$(_this).popover('show')
 			$('.popover').css('top',($(_this).offset().top - 50) + 'px')
-			
-		EMT.get '/mix/mixcard_tracks_popover/' + $(_this).data('id'), {}, (data) ->
+
+		EMT.get '/mixcard_tracks_popover/' + $(_this).data('id'), {}, (data) ->
 			view = data.payload.data.partials.mixcard_tracks_popover
 			popover = $(_this).attr('data-content', Mustache.render(view, data.payload)).data('popover')
 			popover.setContent()
@@ -69,7 +69,7 @@ $(document).on 'mouseleave', '.popover', () ->
 # 	$(_this).popover('show')
 # 	$('.popover').css('top',($(_this).offset().top - 50) + 'px')
 
-# 	EMT.get '/mix/mixcard_tracks_popover/' + $(_this).data('id'), {}, (data) ->
+# 	EMT.get '/mixcard_tracks_popover/' + $(_this).data('id'), {}, (data) ->
 # 		view = data.payload.data.partials.mixcard_tracks_popover
 # 		popover = $(_this).attr('data-content', Mustache.render(view, data.payload)).data('popover')
 # 		popover.setContent()
@@ -79,7 +79,15 @@ $(document).on 'mouseleave', '.popover', () ->
 # 		if $('.popover-content ul li:nth-child(11)')[0]
 # 			$('<li class="more"><div><i class="icon-sort-down"/></div>more</li>').insertAfter('li.hide-after')
 
-	
+$(document).on 'click', '.mixCard', (event) ->
+	id = $(this).data('id')
+	EMT.pageRouter.navigate('/mix/'+id, {trigger:true, replace:true});
+
+$(document).on 'click', 'ul.mix-tracks li:not(.more)', (event) ->
+	id = $(this).closest('.popover').siblings('.mixCard').data('id')
+	track = $(this).index()+1
+	EMT.pageRouter.navigate('/mix/' + id + '/' + track, {trigger:true, replace:true});
+
 $(document).on 'click', 'ul.mix-tracks li.more', (event) ->
 	event.stopPropagation()
 	$(@).remove();
