@@ -48,7 +48,9 @@ module.exports = function(grunt) {
           'coffee/socketio.coffee',
           'coffee/utils.coffee',
           'coffee/YT.coffee',
-          'coffee/mixcard.coffee'
+          'coffee/playerControls.coffee',
+          'coffee/mixcard.coffee',
+          'coffee/mix.coffee'
         ],
         dest: 'coffee/cat/EMT.coffee'
       }

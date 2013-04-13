@@ -1,5 +1,5 @@
 (function() {
-  var addResultsetToRequest, async, connection, executeActionSequence, executeChildSql, executeDB, executeNextAction, executePartialSql, fs, path, processParentChildQuery, tasks;
+  var addResultsetToRequest, async, connection, executeActionSequence, executeChildSql, executeDB, executeNextAction, executePartialSql, fs, path, processParentChildQuery, tasks, utils;
 
   fs = require('fs');
 
@@ -10,6 +10,8 @@
   connection = require('./connection');
 
   tasks = require('./tasks');
+
+  utils = require('./utils');
 
   exports.compileAllDSLActions = function(callback) {
     var actionDictionary, actionName, dslFiles, file, fileName, fullPath, fullPathFile, stats, _ref;
@@ -202,8 +204,14 @@
   };
 
   addResultsetToRequest = function(req, propertyName, resultSet) {
+    var jsonResult;
     if ((resultSet != null) && resultSet.length > 0) {
       req.__returnData[propertyName] = resultSet;
+      jsonResult = JSON.stringify(resultSet, utils.sanitizeSlashes);
+      jsonResult = utils.escapeQuote(jsonResult);
+      req.__returnData[propertyName + "_serialize"] = {
+        SerializedData: jsonResult
+      };
       req.__returnData[propertyName + '_count'] = resultSet.length;
       return req.__data[propertyName] = resultSet;
     }

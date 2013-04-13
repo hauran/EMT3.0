@@ -5,7 +5,13 @@ EMT.LOGIN_COOKIE = 'emt_l'
 EMT.partials = {}
 EMT.meId
 EMT.meEmail
+EMT.controls
 EMT.YT
+EMT.YTPlayer
+EMT.YTupdateInterval 
+EMT.mixId
+EMT.trackList 
+EMT.currentTrack
 EMT.mixCard
 
 EMT.BaseView = Backbone.View.extend({});
@@ -98,7 +104,6 @@ hammertime = $(document).hammer()
 $(document).ready  ->
 	EMT.pageRouter = new EMT.PageRouter()
 	Backbone.history.start {pushState: true}
-	EMT.YT = new EMT.YouTube()
 
 	$(document).click () ->
 		$('.mixCard').popover('hide')

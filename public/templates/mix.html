@@ -1,1 +1,34 @@
-PLAY MIX
+{{#data}}
+	<div id="mix_stage">
+	 	{{#mix}}
+			PLAY MIX {{mixName}}
+			<div>by <a href="#">{{userName}}</a></div>
+		{{/mix}}
+
+		<ul class='mix-tracks'>
+			{{#tracks}}
+				<li data-id="{{songId}}" data-url="{{url}}" data-type="{{type}}">{{title}}</li>
+			{{/tracks}}
+		</ul>
+	</div>
+
+	<script>
+		EMT.trackList = JSON.parse('{{{mix_tracks_serialize.SerializedData}}}');
+		var params = window.location.href.split('/');
+
+		EMT.mixId = parseInt(params[params.length-2]);
+		EMT.currentTrack = parseInt(params[params.length-1]);
+
+		if(!_.isUndefined(EMT.YTPlayer.loadVideoById)) {
+			EMT.YT.load($('.mix-tracks li:nth-child(' + EMT.currentTrack  + ')').data('url'))
+		}
+		else {
+			temp = setInterval(function(){
+				if(!_.isUndefined(EMT.YTPlayer.loadVideoById)) {
+					clearInterval(temp)
+					EMT.YT.load($('.mix-tracks li:nth-child(' + EMT.currentTrack  + ')').data('url'))
+				}
+			},250);
+		}
+	</script>
+{{/data}}

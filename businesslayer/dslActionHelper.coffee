@@ -3,6 +3,8 @@ path = require('path')
 async = require('async')
 connection = require ('./connection')
 tasks = require('./tasks')
+utils = require('./utils')
+
 
 exports.compileAllDSLActions = (callback) ->
 	actionDictionary = {}
@@ -181,6 +183,16 @@ addResultsetToRequest = (req, propertyName, resultSet) ->
 	# console.log 'addResultsetToRequest', propertyName, resultSet
 	if resultSet? and resultSet.length > 0 
 		req.__returnData[propertyName] = resultSet
+
+		jsonResult = JSON.stringify(resultSet, utils.sanitizeSlashes);
+		jsonResult = utils.escapeQuote(jsonResult);
+		req.__returnData[propertyName + "_serialize"] = {
+			SerializedData: jsonResult
+		};
 		req.__returnData[propertyName + '_count'] = resultSet.length
 		req.__data[propertyName] = resultSet 
+
+
+
+
 
