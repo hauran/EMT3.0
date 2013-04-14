@@ -38,7 +38,8 @@ module.exports = function(grunt) {
           "public/lib/mustache.js",
           "public/lib/jquery.timeago.js",
           "public/lib/jquery.dateformat.js",
-          "public/lib/jquery.hoverIntent.js"
+          "public/lib/jquery.hoverIntent.js",
+          "public/lib/jquery.jplayer.min.js"
         ],
         dest: 'public/lib/EMT.libs.js'
       },
@@ -48,6 +49,7 @@ module.exports = function(grunt) {
           'coffee/socketio.coffee',
           'coffee/utils.coffee',
           'coffee/YT.coffee',
+          'coffee/SC.coffee',
           'coffee/playerControls.coffee',
           'coffee/mixcard.coffee',
           'coffee/mix.coffee'

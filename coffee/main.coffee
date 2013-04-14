@@ -8,7 +8,9 @@ EMT.meEmail
 EMT.controls
 EMT.YT
 EMT.YTPlayer
-EMT.YTupdateInterval 
+EMT.YTupdateInterval
+EMT.SC
+EMT.SCID = '002ef906c036a78c4cfad7c6c08a84dd'
 EMT.mixId
 EMT.trackList 
 EMT.currentTrack

@@ -1,7 +1,12 @@
 {{#data}}
 	<div id="mix_stage">
+		<div id='controls'>
+			<div class='play-pause'><i class='icon-pause'/></div>
+			<div class='next'><i class='icon-step-forward'/></div>
+		</div>
+
 	 	{{#mix}}
-			PLAY MIX {{mixName}}
+			<h3>{{mixName}}</h3>
 			<div>by <a href="#">{{userName}}</a></div>
 		{{/mix}}
 
@@ -15,20 +20,8 @@
 	<script>
 		EMT.trackList = JSON.parse('{{{mix_tracks_serialize.SerializedData}}}');
 		var params = window.location.href.split('/');
-
 		EMT.mixId = parseInt(params[params.length-2]);
 		EMT.currentTrack = parseInt(params[params.length-1]);
-
-		if(!_.isUndefined(EMT.YTPlayer.loadVideoById)) {
-			EMT.YT.load($('.mix-tracks li:nth-child(' + EMT.currentTrack  + ')').data('url'))
-		}
-		else {
-			temp = setInterval(function(){
-				if(!_.isUndefined(EMT.YTPlayer.loadVideoById)) {
-					clearInterval(temp)
-					EMT.YT.load($('.mix-tracks li:nth-child(' + EMT.currentTrack  + ')').data('url'))
-				}
-			},250);
-		}
+		EMT.loadMix(EMT.currentTrack);
 	</script>
 {{/data}}

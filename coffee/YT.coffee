@@ -21,13 +21,12 @@ EMT.YouTube = () ->
 		EMT.YTPlayer.loadVideoById(@getCode(url));
 
 	@play = () ->
-		@
+		EMT.YTPlayer.playVideo()
 
 	@pause = () ->
-		@
+		EMT.YTPlayer.pauseVideo()
 
-	@stopVideo = (args) ->
-		_this = @
+	@stop = () ->
 		# clearInterval(MXT.YTupdateInterval);
 		EMT.YTPlayer.stopVideo()
 
@@ -38,8 +37,11 @@ EMT.YouTube = () ->
 		status = EMT.YTPlayer.getPlayerState();
 		if (status == 2) 
 			@play()
+			playing = true
 		else if(status== 1)
 			@pause()
+			playing = false
+		playing
 
 	# @onPlayerReady = (event) ->
     	# event.target.playVideo()
@@ -75,6 +77,7 @@ EMT.YouTube = () ->
 		else if(event.data == YT.PlayerState.PAUSED || event.data == YT.PlayerState.ENDED || event.data == YT.PlayerState.BUFFERING)
 			clearInterval(EMT.YTupdateInterval);
 			if(event.data == YT.PlayerState.ENDED)
+				debugger;
 				EMT.controls.nextSong()
 		
 
