@@ -7,7 +7,7 @@ html {
 }
 
 body {
-	padding:10px;
+	padding:0px 10px;
 	margin-left:auto;
 	margin-right:auto;
 	height: 100%;
@@ -26,6 +26,36 @@ ul{
 		margin-top:3px;
 		list-style: none;
 	}
+}
+
+#titleBar {
+	background-color: #2C3E50;
+	position: fixed;
+	top:0px;
+	left:0px;
+	width:100%;
+	color:#ECF0F1;
+	padding-left:10px;
+	height: 63px;
+	z-index: 1;
+	// & > div {
+	// 	display: inline-block;
+	// }
+	.title {
+		position: absolute;
+	}
+	.search {
+		text-align: center;
+		padding-top: 10px;
+		width:100%;
+		input {
+			width: 255px;
+		}
+	}
+}
+
+#_EMT-containter {
+	margin-top:68px;
 }
 
 .clear {

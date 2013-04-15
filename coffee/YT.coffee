@@ -77,7 +77,6 @@ EMT.YouTube = () ->
 		else if(event.data == YT.PlayerState.PAUSED || event.data == YT.PlayerState.ENDED || event.data == YT.PlayerState.BUFFERING)
 			clearInterval(EMT.YTupdateInterval);
 			if(event.data == YT.PlayerState.ENDED)
-				debugger;
 				EMT.controls.nextSong()
 		
 
