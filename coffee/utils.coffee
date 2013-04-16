@@ -48,9 +48,12 @@ EMT.phoneGapUrl = (url) ->
 			url = EMT.PHONE_GAP_SERVER + url
 	url
 
-EMT.redoLayout = () ->
-	$('#leftBar').height($('#rightContent').height())
-	$('.content-modal').height($('#rightContent').height())
+EMT.customRadiosAndCheckboxes = () ->
+	$(".checkbox, .radio").prepend("<span class='icon'></span><span class='icon-to-fade'></span>");
+	$(".checkbox, .radio").click(->
+		setupLabel();
+	)
+	setupLabel()
 
 $.ajaxSetup {
 	timeout: 60000

@@ -1,0 +1,32 @@
+#mix_stage {
+	.mix-tracks{
+		li {
+			cursor: pointer;
+			padding: 2px 5px;
+			font-size: 16px;
+			&.active {
+				background-color: #2980B9;
+				color:#fff;
+			}
+			&:not(.active):hover{
+				background-color: #3498DB;
+			}
+		}
+	}
+	#controls{
+		vertical-align:top;
+		div {
+			cursor: pointer;
+			display: inline-block;
+			margin-right:15px;
+			i {
+				font-size: 30px;
+			}
+			&:hover {
+				i {
+					color:#1abc9c;
+				}
+			}
+		}
+	}
+}

@@ -16,9 +16,11 @@ EMT.trackList
 EMT.currentTrack
 EMT.mixCard
 
-EMT.BaseView = Backbone.View.extend({});
-EMT.BaseModel = Backbone.Model.extend({});
-EMT.PageModel = EMT.BaseModel.extend({});
+EMT.BaseView = Backbone.View.extend({})
+EMT.BaseModel = Backbone.Model.extend({})
+EMT.PageModel = EMT.BaseModel.extend({})
+
+EMT.Partials = {}
 
 EMT.PageView = EMT.BaseView.extend {
 	el: $("body")
@@ -110,3 +112,8 @@ $(document).ready  ->
 	$(document).click () ->
 		$('.mixCard').popover('hide')
 
+	$(document).on 'click', '#titleBar .create button', (event) ->
+		if(!EMT.Partials.createMix)
+			EMT.get '/create_mix_modal', {}, (partial)->
+				$('body').append(partial.view)
+				$('#createMixModal').modal({show:true})

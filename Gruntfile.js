@@ -20,14 +20,15 @@ module.exports = function(grunt) {
         src:[
           "public/lib/bootstrap/css/bootstrap.css",
           "public/lib/bootstrap/css/bootstrap-responsive.css",
-          "public/lib/flat-ui/css/flat-ui.css",
-          "public/lib/font-awesome/font-awesome.min.css"
+          "public/lib/font-awesome/font-awesome.min.css",
+          "public/lib/flat-ui/css/flat-ui.css"
         ],
         dest: 'public/css/EMT.libs.css'
       },
       vendor: {
         src:[
           "public/lib/jquery.min.1.9.0.js",
+          "public/lib/flat-ui/js/jquery-ui-1.10.0.custom.min.js",
           "public/lib/jquery.hammer.min.js",
           "public/lib/jquery.cookie.js",
           "public/lib/jquery.base64.min.js",
@@ -39,7 +40,9 @@ module.exports = function(grunt) {
           "public/lib/jquery.timeago.js",
           "public/lib/jquery.dateformat.js",
           "public/lib/jquery.hoverIntent.js",
-          "public/lib/jquery.jplayer.min.js"
+          "public/lib/jquery.jplayer.min.js",
+          "public/lib/flat-ui/js/custom_checkbox_and_radio.js",
+          "public/lib/flat-ui/js/custom_radio.js"
         ],
         dest: 'public/lib/EMT.libs.js'
       },
