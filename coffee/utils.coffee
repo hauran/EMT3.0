@@ -55,6 +55,10 @@ EMT.customRadiosAndCheckboxes = () ->
 	)
 	setupLabel()
 
+EMT.customToggle = () ->
+	$(".toggle").each (index, toggle) ->
+        toggleHandler(toggle);
+
 $.ajaxSetup {
 	timeout: 60000
 	,beforeSend: (xhr) ->

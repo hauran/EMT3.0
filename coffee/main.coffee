@@ -112,8 +112,4 @@ $(document).ready  ->
 	$(document).click () ->
 		$('.mixCard').popover('hide')
 
-	$(document).on 'click', '#titleBar .create button', (event) ->
-		if(!EMT.Partials.createMix)
-			EMT.get '/create_mix_modal', {}, (partial)->
-				$('body').append(partial.view)
-				$('#createMixModal').modal({show:true})
+	

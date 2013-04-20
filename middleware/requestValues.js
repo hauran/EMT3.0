@@ -6,22 +6,26 @@ Authentication = require('../businesslayer/authentication');
 url = require('url');
 qs = require('querystring');
 
-var noAuthReqPaths = [
-					'coming_soon',
-					'welcome',
-					'facebookSignUp',
-					'facebookSignInå',
-					'login',
-					'/post/logon',
-					'post/register_account',
-					'join/signup',
-					'join/register',
-					'favicon.ico',
-					'most_collected',
-					'most_played',
-					'mixcard_tracks_popover',
-					'mix'
- 				];
+// var noAuthReqPaths = [
+// 					'coming_soon',
+// 					'welcome',
+// 					'facebookSignUp',
+// 					'facebookSignInå',
+// 					'login',
+// 					'/post/logon',
+// 					'post/register_account',
+// 					'join/signup',
+// 					'join/register',
+// 					'favicon.ico',
+// 					'most_collected',
+// 					'most_played',
+// 					'mixcard_tracks_popover',
+// 					'mix'
+//  				];
+
+var authNeeded = [
+	'home'
+];
 
 exports = module.exports = function requestValues() {
 	var _getAuthorizedEmail = function (authCode) {
@@ -56,7 +60,29 @@ exports = module.exports = function requestValues() {
 		_.extend(req.__data, queryStringJson);
 		_.extend(req.__data, req.body);
 		root = req.url.split('/')[1];
-		next();
+		if(_.indexOf(authNeeded,root) != -1){
+			req.__data.auth = _getAuthorizedEmail(authCode);
+			if(!_.isUndefined(req.__data.auth) && req.__data.auth.email && req.__data.auth.email!=''){
+				Authentication.authenticate(req, function(err, results){
+					if(results && results.length==1){
+						req.__returnData.me=results[0];
+						req.__data.me=results[0];
+						next();
+					}
+					else {
+						res.send({}, 401);
+					}
+				});
+			}
+			else {
+				res.send({}, 401);
+			}
+		}
+		else {
+			next()
+		}
+
+
 		// if(_.indexOf(noAuthReqPaths, root) == -1) {
 		// 	req.__data.auth = _getAuthorizedEmail(authCode);
 		// 	if(!_.isUndefined(req.__data.auth) && req.__data.auth.email && req.__data.auth.email!=''){

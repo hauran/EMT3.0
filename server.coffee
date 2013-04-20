@@ -10,7 +10,10 @@ server = http.createServer(app)
 # io = require('socket.io').listen(server, { log: false })
 
 dslActionHelper = require('./businesslayer/dslActionHelper')
+cache = require('./businesslayer/cache')
+
 GLOBAL.actionDictionary = {}
+GLOBAL.cache = {}
 GLOBAL.appId = "447275615345245"
 GLOBAL.appSecret = "39ee3fe876d6f33d399ccdc1642fea3a"
 GLOBAL.audioscrobbler_api_key = "ab13e2a8580857bcd35728dd7f5e8c60"
@@ -18,6 +21,11 @@ GLOBAL.rooms = {};
 dslActionHelper.compileAllDSLActions (actionDictionary) ->
   GLOBAL.actionDictionary = actionDictionary
 
+cache.most_collected (cache) ->
+  GLOBAL.cache.most_collected = {propertyName:'collection', cache: cache.collection}
+
+cache.most_played (cache) ->
+  GLOBAL.cache.most_played = {propertyName:'collection', cache: cache.collection}
 
 app.configure ->
   requestValues = require './middleware/requestValues'

@@ -64,13 +64,22 @@
       }
     } else if (typeof action === 'object') {
       if (action.sqlFileList) {
-        return processParentChildQuery(action, req, function(err, resultSet) {
-          if (err) {
-            return handleError(req, err, callback);
+        if (req.__returnData[action.propertyName]) {
+          counter++;
+          if (counter === actionJson.length) {
+            return callback(null, req.__returnData);
           } else {
-            return executeNextAction(req, actionJson, counter, resultSet, callback);
+            return executeActionSequence(req, actionJson, counter, returnResultSet, callback);
           }
-        });
+        } else {
+          return processParentChildQuery(action, req, function(err, resultSet) {
+            if (err) {
+              return handleError(req, err, callback);
+            } else {
+              return executeNextAction(req, actionJson, counter, resultSet, callback);
+            }
+          });
+        }
       } else {
         return executePartialSql(req, action, function(err, resultSet) {
           if (err) {

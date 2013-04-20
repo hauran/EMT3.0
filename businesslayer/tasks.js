@@ -25,6 +25,15 @@
 
   mixcard_collection = fs.readFileSync("public/templates/partials/mixcard_collection.html", "ascii");
 
+  exports.checkCache = function(req, callback) {
+    var data;
+    if (GLOBAL.cache[req.actionName]) {
+      data = {};
+      req.__returnData[GLOBAL.cache[req.actionName].propertyName] = GLOBAL.cache[req.actionName].cache.slice(0, 5);
+    }
+    return callback(null, {});
+  };
+
   exports.mixcard_collection_partial = function(req, callback) {
     var mixcard_collection_partial;
     if (!(req.__returnData.views != null)) {
@@ -63,7 +72,7 @@
     if (data.collection) {
       _.each(data.collection, function(mix) {
         _.each(mix.stats, function(stats, index) {
-          if (stats[0].collected) {
+          if (stats[0] && stats[0].collected) {
             stats[0].collected = accounting.formatNumber(stats[0].collected);
             if (parseInt(stats[0].plays) > 10000) {
               return stats[0].plays = Math.floor(parseInt(stats[0].plays) / 1000) + 'k';
@@ -72,7 +81,9 @@
             }
           }
         });
-        mix.stats.splice(0, 2);
+        if (mix.stats.length > 1) {
+          mix.stats.splice(0, 2);
+        }
         return mix.stats = _.flatten(mix.stats);
       });
       delete req.__returnData.mix_stats;

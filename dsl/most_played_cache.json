@@ -1,11 +1,11 @@
 [
-	"tasks.checkCache",
   	{
     	"sqlFileList":{
 	        "parent":{
-	           "sql":"most_collected",
+	           "sql":"most_played",
 	           "select":{
-	              "limit":5
+	              "limit":100,
+	              "today":true
 	           }
 	        },
 	        "children":[
@@ -27,7 +27,5 @@
 	        ]
 	    },
 	    "propertyName":"collection"
-  	}, 
-  	"tasks.formatNumbers",
-  	"tasks.mixcard_collection_partial"
+  	}
  ]

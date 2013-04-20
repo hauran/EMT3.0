@@ -23,6 +23,7 @@ exports.executeAction = (req, res, actionName, callback) ->
 	# console.log 'executeAction', actionName
 	dbFilePath = "db/" + actionName + ".sql"
 	htmlFilePath = "public/templates/" + actionName + ".html"
+
 	
 	if GLOBAL.actionDictionary[actionName]?
 		# console.log 'dsl json file'
@@ -50,12 +51,21 @@ executeActionSequence = (req, actionJson, counter, returnResultSet, callback) ->
 			executeDB req, action, (err, returnValue) ->
 				executeNextAction req, actionJson, counter, returnValue, callback
 	else if typeof action is 'object' 
+
 		if action.sqlFileList # parent child query execution
-			processParentChildQuery action, req, (err, resultSet) ->
-				if (err)
-					handleError req, err, callback
+			#cached data in return data
+			if req.__returnData[action.propertyName]
+				counter++
+				if counter == actionJson.length
+					callback  null, req.__returnData
 				else
-					executeNextAction req, actionJson, counter, resultSet, callback
+					executeActionSequence req, actionJson, counter, returnResultSet, callback
+			else 
+				processParentChildQuery action, req, (err, resultSet) ->
+					if (err)
+						handleError req, err, callback
+					else
+						executeNextAction req, actionJson, counter, resultSet, callback
 		else #select query with sub selects/joins/where
 			executePartialSql req, action, (err, resultSet) ->
 				if (err)
@@ -98,6 +108,7 @@ executeDB = (req, action, callback) ->
 
 executePartialSql = (req, action, callback) ->
 	actionName = action
+
 	if typeof action is 'object'
 		actionName = action.sql	
 		req.__data.select = action.select
@@ -152,13 +163,13 @@ executeChildSql = (req, parentSet, children, parentCounter, childCounter, callba
 
 executeNextAction = (req, actionJson, counter, returnResultSet, callback) ->
 	action = actionJson[counter]
-
 	# console.log action, returnResultSet
 
 	# console.log action
 	# if typeof action is 'string'
 	# console.log 'executeNextAction', action, returnResultSet
 	actionName = action
+
 	if typeof action is 'object'
 		if action.propertyName
 			actionName = action.propertyName

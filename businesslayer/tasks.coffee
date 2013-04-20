@@ -14,6 +14,13 @@ mixcard = fs.readFileSync "public/templates/partials/mixcard.html", "ascii"
 mixcard_tracks_popover = fs.readFileSync "public/templates/partials/mixcard_tracks_popover.html", "ascii"
 mixcard_collection = fs.readFileSync "public/templates/partials/mixcard_collection.html", "ascii"
 
+
+exports.checkCache = (req, callback) ->
+	if GLOBAL.cache[req.actionName]
+		data = {}
+		req.__returnData[GLOBAL.cache[req.actionName].propertyName] = GLOBAL.cache[req.actionName].cache.slice(0,5)
+	callback null,{}
+
 exports.mixcard_collection_partial = (req, callback) ->
 	if(!req.__returnData.views?)
 		req.__returnData.views = {}
@@ -40,14 +47,15 @@ exports.formatNumbers = (req, callback) ->
 	if(data.collection)
 		_.each data.collection, (mix) ->
 			_.each mix.stats, (stats, index) ->
-				if stats[0].collected
+				if stats[0] && stats[0].collected
 					stats[0].collected = accounting.formatNumber(stats[0].collected)
 
 					if parseInt(stats[0].plays) > 10000
 						stats[0].plays = Math.floor(parseInt(stats[0].plays)/1000) + 'k'
 					else
 						stats[0].plays = accounting.formatNumber(stats[0].plays)
-			mix.stats.splice(0,2)
+			if(mix.stats.length > 1)
+				mix.stats.splice(0,2)
 			mix.stats = _.flatten(mix.stats)
 		delete req.__returnData.mix_stats
 		delete req.__returnData.mix_stats_count

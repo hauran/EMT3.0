@@ -55,7 +55,8 @@ module.exports = function(grunt) {
           'coffee/SC.coffee',
           'coffee/playerControls.coffee',
           'coffee/mixcard.coffee',
-          'coffee/mix.coffee'
+          'coffee/mix.coffee',
+          'coffee/create_mix_modal.coffee'
         ],
         dest: 'coffee/cat/EMT.coffee'
       }

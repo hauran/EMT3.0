@@ -1,37 +1,50 @@
-<div class="modal hide fade" id='createMixModal'>
+<div class="modal hide" id='createMixModal'>
   <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
     <h3>Create Mix</h3>
   </div>
   <div class="modal-body">
-
-    <p> Mix Name:</p>
-    <input type="text" placeholder="Name">
-      
-
+    <div>
+      <p> Mix Name:</p>
+      <input type="text" name='name'>
+    </div>
+    <div>
       <p> Mix Length:</p>
-      <label class="radio">
-        <input type="radio" name="mixlength" id="mixLength90" value="60">
-        60
-      </label>
-      <label class="radio checked">
-        <input type="radio" name="mixlength" id="mixLength90" value="90" checked="">
-        90
-      </label>
-      <label class="radio">
-        <input type="radio" name="mixlength" id="mixLength120" value="120">
-        120
-      </label>
-      <label class="radio">
-        <input type="radio" name="mixlength" id="mixLengthInfi" value="0">
-        &infin;
-      </label>
-  </div>
+        <label class="radio">
+          <input type="radio" name="mixlength" id="mixLength90" value="60">
+          60
+        </label>
+        <label class="radio checked">
+          <input type="radio" name="mixlength" id="mixLength90" value="90" checked="">
+          90
+        </label>
+        <label class="radio">
+          <input type="radio" name="mixlength" id="mixLength120" value="120">
+          120
+        </label>
+        <label class="radio infinity" >
+          <input type="radio" name="mixlength" id="mixLengthInfi" value="0">
+          &infin;
+        </label>
+    </div>
+    <div>
+      <p> Collaborate:</p>
+      <div class="toggle toggle-icon">
+        <label class="toggle-radio fui-checkmark-16" for="toggleOption6"></label>
+        <input type="radio" name="toggleOptions3" id="toggleOption5" value="option5" checked="checked">
+        <label class="toggle-radio fui-cross-16" for="toggleOption5"></label>
+        <input type="radio" name="toggleOptions3" id="toggleOption6" value="option6">
+      </div>
+    </div>
+  </div>  
+
   <div class="modal-footer">
     <a href="#" class="btn btn-primary">Save</a>
   </div>
 </div>
 
 <script>
-  EMT.customRadiosAndCheckboxes()
+  EMT.customRadiosAndCheckboxes();
+  EMT.customToggle();
+  
 </script>

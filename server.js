@@ -1,5 +1,5 @@
 (function() {
-  var app, dslActionHelper, express, fs, http, ip, isNull, path, port, server, util, _;
+  var app, cache, dslActionHelper, express, fs, http, ip, isNull, path, port, server, util, _;
 
   express = require('express');
 
@@ -19,7 +19,11 @@
 
   dslActionHelper = require('./businesslayer/dslActionHelper');
 
+  cache = require('./businesslayer/cache');
+
   GLOBAL.actionDictionary = {};
+
+  GLOBAL.cache = {};
 
   GLOBAL.appId = "447275615345245";
 
@@ -31,6 +35,20 @@
 
   dslActionHelper.compileAllDSLActions(function(actionDictionary) {
     return GLOBAL.actionDictionary = actionDictionary;
+  });
+
+  cache.most_collected(function(cache) {
+    return GLOBAL.cache.most_collected = {
+      propertyName: 'collection',
+      cache: cache.collection
+    };
+  });
+
+  cache.most_played(function(cache) {
+    return GLOBAL.cache.most_played = {
+      propertyName: 'collection',
+      cache: cache.collection
+    };
   });
 
   app.configure(function() {
