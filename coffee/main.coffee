@@ -15,6 +15,7 @@ EMT.mixId
 EMT.trackList 
 EMT.currentTrack
 EMT.mixCard
+EMT.slideTransition
 
 EMT.BaseView = Backbone.View.extend({})
 EMT.BaseModel = Backbone.Model.extend({})

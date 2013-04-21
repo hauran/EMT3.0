@@ -6,10 +6,13 @@ and m.validStatusId = 1
 and um.mixId = m.mixId
 and um.ownerId = u.userId
 {{#select.today}}
-	and p.playDate > DATE_ADD(now(),INTERVAL -20 DAY)
+	and p.playDate > DATE_ADD(now(),INTERVAL -60 DAY)
 {{/select.today}}
 group by m.mixId
 order by c desc, mixName
 {{#select.limit}}
-limit {{select.limit}}
+limit {{#row}}{{row}}{{/row}}{{^row}}0{{/row}},{{select.limit}}
 {{/select.limit}}	
+{{^select.limit}}{{#row}}
+limit {{row}},5
+{{/row}}{{/select.limit}}

@@ -42,7 +42,8 @@ module.exports = function(grunt) {
           "public/lib/jquery.hoverIntent.js",
           "public/lib/jquery.jplayer.min.js",
           "public/lib/flat-ui/js/custom_checkbox_and_radio.js",
-          "public/lib/flat-ui/js/custom_radio.js"
+          "public/lib/flat-ui/js/custom_radio.js",
+          "public/lib/jquery.iosslider.js"
         ],
         dest: 'public/lib/EMT.libs.js'
       },
@@ -54,6 +55,7 @@ module.exports = function(grunt) {
           'coffee/YT.coffee',
           'coffee/SC.coffee',
           'coffee/playerControls.coffee',
+          'coffee/welcome.coffee',
           'coffee/mixcard.coffee',
           'coffee/mix.coffee',
           'coffee/create_mix_modal.coffee'

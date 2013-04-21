@@ -9,6 +9,7 @@ EMT.PlayerControls = () ->
 			EMT.SC.load(track.url)
 
 		EMT.currentTrack++
+		EMT.highlightTrackPlaying()
 		EMT.pageRouter.navigate('/mix/' + EMT.mixId + '/' + EMT.currentTrack, {trigger:false, replace:false});
 
 	@toggle = () ->

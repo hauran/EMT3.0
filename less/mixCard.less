@@ -3,7 +3,7 @@ div.mixCard {
 	margin:10px 10px 0px 0px;
 	border:1px solid #666;
 	width:18%;
-	min-width: 240px;
+	min-width: 200px;
 	position: relative;
 	div.icon {
 		.opacity(0);
@@ -41,9 +41,11 @@ div.mixCard {
 		font-size: 12px;
 		padding:0px 5px 0px 5px;
 		border-top:1px solid #666;
+		white-space: nowrap;
 		.names{
+			width:75%;
+			display: inline-block;
 			div {
-				width: 180px;
 				overflow: hidden;
 				text-overflow: ellipsis;
 				white-space: nowrap;
@@ -58,7 +60,9 @@ div.mixCard {
 			// white-space: nowrap;
 		}
 		.stats {
-
+			display: inline-block;
+			position: absolute;
+			right:5px;
 		}
 	}
 }
@@ -66,6 +70,7 @@ div.mixCard {
 		
 .popover {
 	background-color: #2C3E50;
+	top:0px;
 	&.right {
 		margin-left: 4px;
 		// margin-top:-67px;
@@ -75,7 +80,7 @@ div.mixCard {
 		}
 	}
 	&.left {
-		margin-left: 4px;
+		margin-left: -4px;
 		// margin-top:-67px;
 		.arrow {
 			top:118px;
@@ -100,7 +105,7 @@ div.mixCard {
 			}
 			&.more {
 				font-size: 11px;
-s				div {
+				div {
 					position: relative;
 					top: -2px;
 					display: inline;

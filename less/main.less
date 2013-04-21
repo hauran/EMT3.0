@@ -37,12 +37,22 @@ ul{
 	color:#ECF0F1;
 	padding-left:10px;
 	height: 63px;
-	z-index: 1;
+	z-index: 10000;
 	// & > div {
 	// 	display: inline-block;
 	// }
 	.title {
 		position: absolute;
+		cursor: pointer;
+		h1{
+			.transition();
+		}
+		&:hover{
+			h1 {
+				.opacity(0.8);
+				.transition();
+			}
+		}
 	}
 	.search {
 		text-align: center;

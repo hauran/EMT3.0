@@ -7,5 +7,8 @@ and um.ownerId = u.userId
 group by mixId
 order by c desc, mixName
 {{#select.limit}}
-limit {{select.limit}}
+limit {{#row}}{{row}}{{/row}}{{^row}}0{{/row}},{{select.limit}}
 {{/select.limit}}	
+{{^select.limit}}{{#row}}
+limit {{row}},5
+{{/row}}{{/select.limit}}
