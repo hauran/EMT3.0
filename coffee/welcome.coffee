@@ -17,7 +17,6 @@ EMT.mostPlayed = (init) ->
 			$('.most-played .slider').html(Mustache.render(data.payload.data.views.mixcard_collection, data.payload, data.payload.data.views))
 		else
 			$('.most-played .iosSlider').iosSlider('addSlide', Mustache.render(data.payload.data.views.mixcard_collection, data.payload, data.payload.data.views), numberOfSlides+1)
-			$('.most-collected .iosSlider').iosSlider('update');
 
 		$('.most-played .mixCard').popover {
 			content:'Loading...',
@@ -62,7 +61,6 @@ EMT.mostCollected = (init) ->
 			$('.most-collected .slider').html(Mustache.render(data.payload.data.views.mixcard_collection, data.payload, data.payload.data.views))
 		else
 			$('.most-collected .iosSlider').iosSlider('addSlide', Mustache.render(data.payload.data.views.mixcard_collection, data.payload, data.payload.data.views), numberOfSlides+1)
-			$('.most-played .iosSlider').iosSlider('update');
 
 		$('.most-collected .mixCard').popover {
 			content:'Loading...',
@@ -87,7 +85,5 @@ EMT.mostCollected = (init) ->
 					EMT.mostCollected()
 			}
 			EMT.mostCollected()
-		else
-			$('.most-collected .iosSlider').iosSlider('update');
 
 
