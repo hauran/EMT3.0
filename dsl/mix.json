@@ -1,12 +1,12 @@
 [
 	"mix",
-    {
-      "sql": "mix_stats",
-      "propertyName": "stats"
-    },
-    {
-      "sql": "mix_tracks",
-      "propertyName": "tracks"
-    },
-  	"tasks.formatNumbers"
+  {
+    "sql": "mix_stats",
+    "propertyName": "stats"
+  },
+  {
+    "sql": "mix_tracks",
+    "propertyName": "tracks"
+  },
+	"tasks.formatNumbers"
 ]

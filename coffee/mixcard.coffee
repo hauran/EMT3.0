@@ -9,10 +9,13 @@ mixcard = () ->
 		), 500
 	@placement = () ->
 		$mixCard = $('.mixCard.hover')
-		rightPosOfPopOver = $mixCard.offset().left + $mixCard.width() + 250;
-		if(rightPosOfPopOver > $(window).width())
+		if($mixCard.offset())
+			rightPosOfPopOver = $mixCard.offset().left + $mixCard.width() + 250;
+			if(rightPosOfPopOver > $(window).width())
 				return 'left'
-		return 'right'
+			return 'right'
+		else
+			return 'right'
 
 	@
 EMT.mixCard = new mixcard()
@@ -84,10 +87,10 @@ $(document).on 'click', '.mixCard', (event) ->
 	if(!EMT.slideTransition)
 		id = $(this).data('id')
 		EMT.mixId = id
-		EMT.pageRouter.navigate('/mix/'+id + '/1', {trigger:true, replace:true});
+		EMT.pageRouter.navigate('/mix/' + id + '/1', {trigger:true, replace:true});
 
 $(document).on 'click', '.popover ul.mix-tracks li:not(.more)', (event) ->
-	id = $(this).closest('.popover').siblings('.mixCard').data('id')
+	id = $('.mixCard.hover').data('id')
 	EMT.mixId = id
 	track = $(this).index()+1
 	EMT.pageRouter.navigate('/mix/' + id + '/' + track, {trigger:true, replace:true});

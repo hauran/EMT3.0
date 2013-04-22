@@ -1,5 +1,7 @@
 #mix_stage {
 	.mix-tracks{
+		height:280px;
+		overflow: auto;
 		li {
 			cursor: pointer;
 			padding: 2px 5px;
@@ -15,6 +17,17 @@
 	}
 	#controls{
 		vertical-align:top;
+		padding:20px 0px;
+		border-bottom:1px solid #34495E;
+		margin-left: -10px;
+		padding-left: 10px;
+		&.affixed{
+			position:fixed;
+			top:60px;
+			z-index: 9000;
+			background-color: @bg-color;
+			width: 100%;
+		}
 		div {
 			cursor: pointer;
 			display: inline-block;

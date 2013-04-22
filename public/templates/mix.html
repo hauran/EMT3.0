@@ -1,20 +1,20 @@
 {{#data}}
 	<div id="mix_stage">
-		<div id='controls'>
-			<div class='play-pause'><i class='icon-pause'/></div>
-			<div class='next'><i class='icon-step-forward'/></div>
-		</div>
-
 	 	{{#mix}}
 			<h3>{{mixName}}</h3>
 			<div>by <a href="#">{{userName}}</a></div>
 		{{/mix}}
 
-		<ul class='mix-tracks'>
+		<ul class='mix-tracks' >
 			{{#tracks}}
 				<li data-id="{{songId}}" data-url="{{url}}" data-type="{{type}}">{{title}}</li>
 			{{/tracks}}
 		</ul>
+
+		<div id='controls'  data-appear-top-offset="60">
+			<div class='play-pause'><i class='icon-pause'/></div>
+			<div class='next'><i class='icon-step-forward'/></div>
+		</div>
 	</div>
 
 	<script>

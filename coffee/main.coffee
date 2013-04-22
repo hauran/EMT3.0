@@ -87,10 +87,13 @@ EMT.PageRouter = Backbone.Router.extend {
 		        action = "/home"
 		
 		EMT.get action, null, (json) ->
-			_this._pageViewSetModel(json)
+			_this._pageViewSetModel(json, action)
 	,
-	_pageViewSetModel: (json) ->
-		$('#_EMT').html(Mustache.render(json.view, json.payload,json.payload.data.partials))
+	_pageViewSetModel: (json, action) ->
+		if(action.indexOf('mix/')==-1)
+			$('#_EMT').html(Mustache.render(json.view, json.payload,json.payload.data.partials))
+		else
+			$('#_player').html(Mustache.render(json.view, json.payload,json.payload.data.partials))
 		$(window).scrollTop(0)
 }
 
@@ -112,5 +115,35 @@ $(document).ready  ->
 
 	$(document).click () ->
 		$('.mixCard').popover('hide')
+
+	$window = $(window)
+	lastScrollTop = 0;
+	$window.scroll () ->
+		st = $(this).scrollTop()
+		window_top = $window.scrollTop()
+		offset = $('#mix_stage #controls').offset()
+		if(offset)
+			top = offset.top
+			# console.log(1, window_top, top, window_top + $('#titleBar').height() > top, window_top is 0)
+			
+			if (st > lastScrollTop)
+				if(window_top + $('#titleBar').height() > top)
+					$('#mix_stage #controls').addClass('affixed')
+					$('#_EMT').addClass('affixed')
+			else
+				# 60 + $('#controls').outerHeight()
+				if(window_top  <= 350)
+				# 	console.log 'removed'
+					$('#mix_stage #controls').removeClass('affixed')
+					$('#_EMT').removeClass('affixed')
+
+		lastScrollTop = st
+
+	# $('#mix_stage #controls').appear()
+	# $('document.body).on 'appear','#mix_stage #controls',()->
+	# 	console.log('disappear')
+
+	# $('document.body).on 'disappear','#mix_stage #controls',()->
+	# 	console.log('appear')
 
 	
