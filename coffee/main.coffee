@@ -124,26 +124,16 @@ $(document).ready  ->
 		offset = $('#mix_stage #controls').offset()
 		if(offset)
 			top = offset.top
-			# console.log(1, window_top, top, window_top + $('#titleBar').height() > top, window_top is 0)
-			
 			if (st > lastScrollTop)
 				if(window_top + $('#titleBar').height() > top)
 					$('#mix_stage #controls').addClass('affixed')
+					$('#mix_stage #controls .minimize i').removeClass('icon-double-angle-up').addClass('icon-double-angle-down')
 					$('#_EMT').addClass('affixed')
 			else
-				# 60 + $('#controls').outerHeight()
-				if(window_top  <= 350)
-				# 	console.log 'removed'
+				if(window_top  <= 350) #WHY 350???? NOT SURE
 					$('#mix_stage #controls').removeClass('affixed')
+					$('#mix_stage #controls .minimize i').addClass('icon-double-angle-up').removeClass('icon-double-angle-down')
 					$('#_EMT').removeClass('affixed')
 
 		lastScrollTop = st
-
-	# $('#mix_stage #controls').appear()
-	# $('document.body).on 'appear','#mix_stage #controls',()->
-	# 	console.log('disappear')
-
-	# $('document.body).on 'disappear','#mix_stage #controls',()->
-	# 	console.log('appear')
-
 	

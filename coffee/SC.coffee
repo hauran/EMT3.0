@@ -4,7 +4,7 @@ $("#SCPlayer").jPlayer()
     	dur  = $("#SCPlayer").data("jPlayer").status.duration;
     	per = currentTime/dur * 100;
     	# console.log per
-		# MXT._cassette.aniTape(per);
+    	EMT.controls.progress(per)
     )
 	.bind($.jPlayer.event.ended, (event) ->
     	EMT.controls.nextSong()

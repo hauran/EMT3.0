@@ -56,12 +56,15 @@ EMT.YouTube = () ->
 	@onPlayerStateChange = (event) ->
 		_this = EMT.YT
 		@getCurrentTimePer = () ->
-			EMT.YTPlayer.getCurrentTime() / EMT.YTPlayer.getDuration() * 100;
+			EMT.YTPlayer.getCurrentTime() / EMT.YTPlayer.getDuration() * 100
 
 		if (event.data == YT.PlayerState.PLAYING) 
 			# if(!EMT.isSR){
+			console.log 'playing'
 			EMT.YTupdateInterval = setInterval (->
 				per = getCurrentTimePer()
+
+				EMT.controls.progress(per)
 				# console.log(per)
 			), 500
 
@@ -75,7 +78,8 @@ EMT.YouTube = () ->
 			# }
 		
 		else if(event.data == YT.PlayerState.PAUSED || event.data == YT.PlayerState.ENDED || event.data == YT.PlayerState.BUFFERING)
-			clearInterval(EMT.YTupdateInterval);
+			console.log 'paused'
+			clearInterval(EMT.YTupdateInterval)
 			if(event.data == YT.PlayerState.ENDED)
 				EMT.controls.nextSong()
 		
