@@ -4,7 +4,7 @@
 	        "parent":{
 	           "sql":"most_played",
 	           "select":{
-	              "limit":5,
+	              "limit":50,
 	              "today":true
 	           }
 	        },
