@@ -19,8 +19,9 @@ $(document).on 'click', '#mix_stage #controls .play-pause', (event) ->
 		$(this).find('i').removeClass('icon-pause').addClass('icon-play')
 
 $(document).on 'click', '#mix_stage #controls .minimize', (event) ->
-	$('#mix_stage #controls').toggleClass('affixed')
-	$('#_EMT').toggleClass('affixed')
+	$('#mix_stage #controls').toggleClass('affixed manual')
+	$('#_EMT').toggleClass('affixed manual')
+	$('#mix_stage .collapse').collapse('toggle');
 	$(this).find('i').toggleClass('icon-double-angle-up').toggleClass('icon-double-angle-down')
 
 

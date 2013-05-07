@@ -88,6 +88,13 @@
   -moz-transition: all @duration @ease;
   transition: all @duration @ease;
 }
+
+.transitionAction(@action:all, @duration:0.2s, @ease:ease-out) {
+  -webkit-transition: @action @duration @ease;
+  -moz-transition: @action @duration @ease;
+  transition: @action @duration @ease;
+}
+
 .inner-shadow(@horizontal:0, @vertical:1px, @blur:2px, @alpha: 0.4) {
   -webkit-box-shadow: inset @horizontal @vertical @blur rgba(0, 0, 0, @alpha);
   -moz-box-shadow: inset @horizontal @vertical @blur rgba(0, 0, 0, @alpha);

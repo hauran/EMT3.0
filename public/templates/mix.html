@@ -1,15 +1,17 @@
 {{#data}}
 	<div id="mix_stage">
-	 	{{#mix}}
-			<h3>{{mixName}}</h3>
-			<div>by <a href="#">{{userName}}</a></div>
-		{{/mix}}
+	 	<div class='collapse out'>
+		 	{{#mix}}
+				<h3>{{mixName}}</h3>
+				<div>by <a href="#">{{userName}}</a></div>
+			{{/mix}}
 
-		<ul class='mix-tracks' >
-			{{#tracks}}
-				<li data-id="{{songId}}" data-url="{{url}}" data-type="{{type}}">{{title}}</li>
-			{{/tracks}}
-		</ul>
+			<ul class='mix-tracks' >
+				{{#tracks}}
+					<li data-id="{{songId}}" data-url="{{url}}" data-type="{{type}}">{{title}}</li>
+				{{/tracks}}
+			</ul>
+		</div>
 
 		<div id='controls'>
 			<div class='control-buttons left-control-buttons'>
@@ -41,5 +43,6 @@
 		EMT.mixId = parseInt(params[params.length-2]);
 		EMT.currentTrack = parseInt(params[params.length-1]);
 		EMT.loadMix(EMT.currentTrack);
+		$('#mix_stage .collapse').collapse();
 	</script>
 {{/data}}

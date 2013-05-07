@@ -15,6 +15,7 @@
 			}
 		}
 	}
+
 	#controls{
 		vertical-align:top;
 		padding:20px 0px;
@@ -23,7 +24,12 @@
 		padding-left: 10px;
 		&.affixed{
 			position:fixed;
-			top:210px;
+			&.auto{
+				top:210px;
+			}
+			&.manual{
+				margin-top:-10px;
+			}
 			z-index: 1000;
 			background-color: @bg-color;
 			width: 100%;
