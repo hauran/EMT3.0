@@ -1,7 +1,9 @@
 {{#data}}
-	<ul class='item'>
+	<div class='direction left'> <i class='icon-caret-left'/></div>
+	<div class='content'>
 		{{#collection}}
-			<li>{{> mixcard}}</li>
+			{{> mixcard}}
 		{{/collection}}
-	</ul>
+	</div>
+	<div class='direction right'><i class='icon-caret-right'/></div>
 {{/data}}

@@ -18,12 +18,7 @@ mixcard_collection = fs.readFileSync "public/templates/partials/mixcard_collecti
 exports.checkCache = (req, callback) ->
 	if GLOBAL.cache[req.actionName]
 		data = {}
-		if (req.__data.row)
-			start = parseInt(req.__data.row)
-		else
-			start = 0
-		end = start + 5
-		req.__returnData[GLOBAL.cache[req.actionName].propertyName] = GLOBAL.cache[req.actionName].cache.slice(start,end)
+		req.__returnData[GLOBAL.cache[req.actionName].propertyName] = GLOBAL.cache[req.actionName].cache
 	callback null,{}
 
 exports.mixcard_collection_partial = (req, callback) ->

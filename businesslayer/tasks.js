@@ -26,16 +26,10 @@
   mixcard_collection = fs.readFileSync("public/templates/partials/mixcard_collection.html", "ascii");
 
   exports.checkCache = function(req, callback) {
-    var data, end, start;
+    var data;
     if (GLOBAL.cache[req.actionName]) {
       data = {};
-      if (req.__data.row) {
-        start = parseInt(req.__data.row);
-      } else {
-        start = 0;
-      }
-      end = start + 5;
-      req.__returnData[GLOBAL.cache[req.actionName].propertyName] = GLOBAL.cache[req.actionName].cache.slice(start, end);
+      req.__returnData[GLOBAL.cache[req.actionName].propertyName] = GLOBAL.cache[req.actionName].cache;
     }
     return callback(null, {});
   };

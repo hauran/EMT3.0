@@ -26,9 +26,11 @@ $(document).on 'click', '#mix_stage #controls .minimize', (event) ->
 
 
 EMT.loadMix = (currentTrack) ->
+	$('body').removeClass('stop-scrolling')
 	EMT.highlightTrackPlaying()
-	EMT.SC.stop()
-	EMT.YT.stop()
+	try 
+		EMT.SC.stop()
+		EMT.YT.stop()
 	$track = $('.mix-tracks li:nth-child(' + currentTrack  + ')')
 	if (parseInt($track.data('type'))==1)
 		if(!_.isUndefined(EMT.YTPlayer) && !_.isUndefined(EMT.YTPlayer.loadVideoById))

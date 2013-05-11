@@ -42,8 +42,7 @@ module.exports = function(grunt) {
           "public/lib/jquery.hoverIntent.js",
           "public/lib/jquery.jplayer.min.js",
           "public/lib/flat-ui/js/custom_checkbox_and_radio.js",
-          "public/lib/flat-ui/js/custom_radio.js",
-          "public/lib/jquery.iosslider.js"
+          "public/lib/flat-ui/js/custom_radio.js"
         ],
         dest: 'public/lib/EMT.libs.js'
       },

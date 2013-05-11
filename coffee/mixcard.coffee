@@ -3,6 +3,7 @@ mixcard = () ->
 	@hidePopover = null
 	@closePopover = () ->
 		_this = @
+		$('body').removeClass('stop-scrolling')
 		setTimeout ( ->
 			if _this.hidePopover
 				$('.mixCard').popover('hide').removeClass('hover')
@@ -33,7 +34,11 @@ $(document).hoverIntent
 
 				$(_this).addClass('hover')
 				$(_this).popover('show')
-				$('.popover').css('top','0px')
+				top = $(_this).offset().top
+
+				sliderLeft = $(_this).closest('.content').position().left
+				left = $('.popover').position().left
+				$('.popover').css({'top':(top - 50) + 'px', 'left':(sliderLeft + left + 10) + 'px'})
 
 			EMT.get '/mixcard_tracks_popover/' + $(_this).data('id'), {}, (data) ->
 				view = data.payload.data.partials.mixcard_tracks_popover
@@ -46,7 +51,7 @@ $(document).hoverIntent
 				if $('.popover-content ul li:nth-child(11)')[0]
 					$('<li class="more"><div><i class="icon-sort-down"/></div>more</li>').insertAfter('li.hide-after')
 
-				$('.popover').insertAfter($(_this).closest('.iosSlider'))
+				$('.popover').insertAfter($(_this).closest('.collection'))
 	out: (event)->
 		EMT.mixCard.hidePopover = true
 		EMT.mixCard.closePopover()
@@ -56,6 +61,7 @@ $(document).hoverIntent
 $(document).on 'mouseenter', '.popover', () -> 
 	setTimeout ( ->
 		EMT.mixCard.hidePopover = false
+		$('body').addClass('stop-scrolling')
 	), 100
 
 $(document).on 'mouseleave', '.popover', () -> 
@@ -70,7 +76,11 @@ $(document).on 'mouseleave', '.popover', () ->
 
 # 	$(_this).addClass('hover')
 # 	$(_this).popover('show')
-# 	$('.popover').css('top','0px')
+# 	top = $(_this).offset().top
+
+# 	sliderLeft = $(_this).closest('.content').position().left
+# 	left = $('.popover').position().left
+# 	$('.popover').css({'top':(top - 50) + 'px', 'left':(sliderLeft + left + 10) + 'px'})
 
 # 	EMT.get '/mixcard_tracks_popover/' + $(_this).data('id'), {}, (data) ->
 # 		view = data.payload.data.partials.mixcard_tracks_popover
@@ -81,7 +91,7 @@ $(document).on 'mouseleave', '.popover', () ->
 
 # 		if $('.popover-content ul li:nth-child(11)')[0]
 # 			$('<li class="more"><div><i class="icon-sort-down"/></div>more</li>').insertAfter('li.hide-after')
-# 		$('.popover').insertAfter($(_this).closest('.iosSlider'))
+# 		$('.popover').insertAfter($(_this).closest('.collection'))
 
 $(document).on 'click', '.mixCard', (event) ->
 	if(!EMT.slideTransition)

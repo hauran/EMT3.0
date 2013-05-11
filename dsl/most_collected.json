@@ -5,7 +5,7 @@
 	        "parent":{
 	           "sql":"most_collected",
 	           "select":{
-	              "limit":5
+	              "limit":50
 	           }
 	        },
 	        "children":[

@@ -1,9 +1,7 @@
 EMT.PlayerControls = () ->
 	@nextSong = () ->
 		clearInterval(EMT.YTupdateInterval)
-		clearInterval(EMT.YTupdateInterval)
 		track = EMT.trackList[EMT.currentTrack]
-		debugger;
 		if(parseInt(track.type)==1)
 			EMT.SC.stop()
 			EMT.YT.load(track.url)
