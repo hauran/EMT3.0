@@ -33,15 +33,16 @@ $(document).hoverIntent
 				$('.mixCard').popover('hide').removeClass('hover')
 
 				$(_this).addClass('hover')
-				$(_this).popover('show')
 				top = $(_this).offset().top
+				
 
+			EMT.get '/mixcard_tracks_popover/' + $(_this).data('id'), {}, (data) ->
+				view = data.payload.data.partials.mixcard_tracks_popover
+				$(_this).popover('show')
 				sliderLeft = $(_this).closest('.content').position().left
 				left = $('.popover').position().left
 				$('.popover').css({'top':(top - 50) + 'px', 'left':(sliderLeft + left + 10) + 'px'})
 
-			EMT.get '/mixcard_tracks_popover/' + $(_this).data('id'), {}, (data) ->
-				view = data.payload.data.partials.mixcard_tracks_popover
 				popover = $(_this).attr('data-content', Mustache.render(view, data.payload)).data('popover')
 				popover.setContent()
 
@@ -52,11 +53,12 @@ $(document).hoverIntent
 					$('<li class="more"><div><i class="icon-sort-down"/></div>more</li>').insertAfter('li.hide-after')
 
 				$('.popover').insertAfter($(_this).closest('.collection'))
-	out: (event)->
-		EMT.mixCard.hidePopover = true
-		EMT.mixCard.closePopover()
 	selector: '.mixCard'
+	interval: 500
 
+$(document).on 'mouseleave', '.mixCard', () -> 
+	EMT.mixCard.hidePopover = true
+	EMT.mixCard.closePopover()
 
 $(document).on 'mouseenter', '.popover', () -> 
 	setTimeout ( ->

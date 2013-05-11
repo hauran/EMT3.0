@@ -28,6 +28,13 @@ $(document).on 'click', '#mix_stage #controls .minimize', (event) ->
 EMT.loadMix = (currentTrack) ->
 	$('body').removeClass('stop-scrolling')
 	EMT.highlightTrackPlaying()
+
+
+	$('#mix_stage #controls').removeClass('affixed manual')
+	$('#_EMT').removeClass('affixed manual')
+	$('#mix_stage .collapse').collapse('show')
+	$(this).find('i').addClass('icon-double-angle-up').removeClass('icon-double-angle-down')
+
 	try 
 		EMT.SC.stop()
 		EMT.YT.stop()
@@ -48,3 +55,4 @@ EMT.highlightTrackPlaying = () ->
 	$('.mix-tracks li').removeClass('active')
 	$track = $('.mix-tracks li:nth-child(' + EMT.currentTrack  + ')')
 	$track.addClass('active')
+	$('.mix-tracks').scrollTo('.active',250)

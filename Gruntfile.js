@@ -41,6 +41,7 @@ module.exports = function(grunt) {
           "public/lib/jquery.dateformat.js",
           "public/lib/jquery.hoverIntent.js",
           "public/lib/jquery.jplayer.min.js",
+          "public/lib/jquery.scrollTo.js",
           "public/lib/flat-ui/js/custom_checkbox_and_radio.js",
           "public/lib/flat-ui/js/custom_radio.js"
         ],
