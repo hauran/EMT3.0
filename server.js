@@ -1,5 +1,5 @@
 (function() {
-  var app, cache, dslActionHelper, express, fs, http, ip, isNull, path, port, server, util, _;
+  var app, cache, dslActionHelper, express, fs, http, isNull, path, port, server, util, _;
 
   express = require('express');
 
@@ -72,15 +72,13 @@
     return app.use(app.router);
   });
 
-  ip = process.env.OPENSHIFT_NODEJS_IP || "127.0.0.1";
-
-  port = process.env.OPENSHIFT_NODEJS_PORT || 8080;
+  port = process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT || 3000;
 
   console.log("--------------------");
 
-  console.log(ip, port);
-
-  server.listen(port, ip);
+  http.createServer(app).listen(port, function() {
+    return console.log("Express server listening on port " + port);
+  });
 
   app.get('/:action/:id?/:track?', function(req, res, next) {
     var actionName, id, payload, queryStringJson;

@@ -13,13 +13,13 @@
 
   mysql = require('mysql');
 
-  host = process.env.OPENSHIFT_MYSQL_DB_HOST || 'localhost';
+  host = process.env.RDS_HOSTNAME || process.env.OPENSHIFT_MYSQL_DB_HOST || 'localhost';
 
-  port = process.env.OPENSHIFT_MYSQL_DB_PORT || null;
+  port = process.env.RDS_PORT || process.env.OPENSHIFT_MYSQL_DB_PORT || null;
 
-  user = process.env.OPENSHIFT_MYSQL_DB_USERNAME || 'root';
+  user = process.env.RDS_USERNAME || process.env.OPENSHIFT_MYSQL_DB_USERNAME || 'root';
 
-  password = process.env.OPENSHIFT_MYSQL_DB_PASSWORD || '';
+  password = process.env.RDS_PASSWORD || process.env.OPENSHIFT_MYSQL_DB_PASSWORD || '';
 
   connectionObj = {
     host: host,

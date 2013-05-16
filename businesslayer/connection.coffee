@@ -12,10 +12,10 @@ _ = require('underscore')
 async = require("async")
 mysql = require('mysql')
 
-host = process.env.OPENSHIFT_MYSQL_DB_HOST || 'localhost'
-port =  process.env.OPENSHIFT_MYSQL_DB_PORT || null
-user = process.env.OPENSHIFT_MYSQL_DB_USERNAME  || 'root'
-password = process.env.OPENSHIFT_MYSQL_DB_PASSWORD || ''
+host = process.env.RDS_HOSTNAME or process.env.OPENSHIFT_MYSQL_DB_HOST or 'localhost'
+port =  process.env.RDS_PORT or process.env.OPENSHIFT_MYSQL_DB_PORT or null
+user = process.env.RDS_USERNAME or process.env.OPENSHIFT_MYSQL_DB_USERNAME  or 'root'
+password =  process.env.RDS_PASSWORD or process.env.OPENSHIFT_MYSQL_DB_PASSWORD or ''
 connectionObj = {
   host     : host,
   user     : user,

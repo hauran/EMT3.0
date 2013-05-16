@@ -1,0 +1,14 @@
+[global]
+ApplicationName=MXT
+AwsCredentialFile=/Users/hauran/.elasticbeanstalk/aws_credential_file
+DevToolsEndpoint=git.elasticbeanstalk.us-east-1.amazonaws.com
+EnvironmentName=MXT-dev
+InstanceProfileName=aws-elasticbeanstalk-ec2-role
+OptionSettingFile=/Users/hauran/Dropbox/EC2test/.elasticbeanstalk/optionsettings.MXT-dev
+RdsDeletionPolicy=Snapshot
+RdsEnabled=Yes
+RdsSourceSnapshotName=
+Region=us-east-1
+ServiceEndpoint=https://elasticbeanstalk.us-east-1.amazonaws.com
+SolutionStack=64bit Amazon Linux running Node.js
+

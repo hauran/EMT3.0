@@ -44,14 +44,14 @@ app.configure ->
   app.use requestValues()
   app.use app.router
 
-ip = process.env.OPENSHIFT_NODEJS_IP or "127.0.0.1"
-port = process.env.OPENSHIFT_NODEJS_PORT or 8080
+# ip = process.env.OPENSHIFT_NODEJS_IP or "127.0.0.1"
+port = process.env.PORT or process.env.OPENSHIFT_NODEJS_PORT or 3000
 console.log "--------------------"
-console.log ip, port
+# console.log ip, port
 
-server.listen port, ip
-
-
+# server.listen port, ip
+http.createServer(app).listen port, () ->
+  console.log "Express server listening on port " + port
 
 app.get '/:action/:id?/:track?', (req, res, next) ->
   actionName = req.params.action
@@ -64,7 +64,6 @@ app.get '/:action/:id?/:track?', (req, res, next) ->
 
   # if (req.params.title)
   #   actionName = req.params.title
-
   req.actionName = actionName
 
   dslActionHelper.executeAction req, res, actionName, (err, resultSet) ->
