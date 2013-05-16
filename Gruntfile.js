@@ -74,7 +74,7 @@ module.exports = function(grunt) {
       },
       server: {
         files: {
-          'server.js': 'server.coffee'
+          'app.js': 'app.coffee'
         }
       },
       businesslayer: {
