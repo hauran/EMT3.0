@@ -17,6 +17,7 @@ $("#SCPlayer").jPlayer()
 
 EMT.SoundCloud = () ->
 	@load = (url) ->
+		EMT.players.hide()
 		scP = url.split("&");
 		scId = scP[1].split("=")[1];
 		playlink = 'http://api.soundcloud.com/tracks/' + scId + '/stream?client_id=002ef906c036a78c4cfad7c6c08a84dd'

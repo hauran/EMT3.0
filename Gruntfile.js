@@ -58,7 +58,8 @@ module.exports = function(grunt) {
           'coffee/welcome.coffee',
           'coffee/mixcard.coffee',
           'coffee/mix.coffee',
-          'coffee/create_mix_modal.coffee'
+          'coffee/create_mix_modal.coffee',
+          'coffee/players.coffee'
         ],
         dest: 'coffee/cat/EMT.coffee'
       }

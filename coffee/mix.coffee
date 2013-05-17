@@ -28,7 +28,7 @@ $(document).on 'click', '#mix_stage #controls .minimize', (event) ->
 EMT.loadMix = (currentTrack) ->
 	$('body').removeClass('stop-scrolling')
 	EMT.highlightTrackPlaying()
-
+	EMT.mixCard.closePopover()
 
 	$('#mix_stage #controls').removeClass('affixed manual')
 	$('#_EMT').removeClass('affixed manual')

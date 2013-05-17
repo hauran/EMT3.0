@@ -99,6 +99,7 @@ $(document).on 'click', '.mixCard', (event) ->
 	if(!EMT.slideTransition)
 		id = $(this).data('id')
 		EMT.mixId = id
+		EMT.mixCard.closePopover()
 		EMT.pageRouter.navigate('/mix/' + id + '/1', {trigger:true, replace:true});
 
 $(document).on 'click', '.popover ul.mix-tracks li:not(.more)', (event) ->

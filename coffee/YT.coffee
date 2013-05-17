@@ -18,6 +18,7 @@ EMT.YouTube = () ->
 
 
 	@load = (url) ->
+		EMT.players.show()
 		EMT.YTPlayer.loadVideoById(@getCode(url));
 
 	@play = () ->
@@ -27,6 +28,7 @@ EMT.YouTube = () ->
 		EMT.YTPlayer.pauseVideo()
 
 	@stop = () ->
+		EMT.players.hide()
 		# clearInterval(MXT.YTupdateInterval);
 		EMT.YTPlayer.stopVideo()
 
@@ -96,7 +98,7 @@ onYouTubeIframeAPIReady = () ->
 		# playerVars:{'autoplay':1, 'controls': 0},
 		events: {
 			'onError': EMT.YT.onErrorNext,
-			# 'onReady': EMT.YT.onPlayerReady,
+			# 'onReady': alert(1),
 			'onStateChange': EMT.YT.onPlayerStateChange
 		}
 	})
