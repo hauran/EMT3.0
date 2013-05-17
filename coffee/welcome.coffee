@@ -34,38 +34,57 @@ EMT.slideLeft = ($content, speed) ->
 	else 
 		clearInterval(EMT.slide)
 
+if !EMT.isTouch
+	$(document).on 'mouseenter', '.direction.right', () ->
+		$('.mixCard').popover('hide').removeClass('hover')
+		$content = $(this).siblings('.content')
+		EMT.slide = setInterval (->
+			EMT.slideRight $content, 4
+		), 10
 
-$(document).on 'mouseenter', '.direction.right', () ->
-	$('.mixCard').popover('hide').removeClass('hover')
-	$content = $(this).siblings('.content')
-	EMT.slide = setInterval (->
-		EMT.slideRight $content, 4
-	), 10
+	$(document).on 'mouseenter', '.direction.left', () ->
+		$('.mixCard').popover('hide').removeClass('hover')
+		$content = $(this).siblings('.content')
+		EMT.slide = setInterval (->
+			EMT.slideLeft $content, 4
+		), 10
 
-$(document).on 'mousedown', '.direction.right', () ->
-	clearInterval(EMT.slide)
-	$content = $(this).siblings('.content')
-	EMT.slide = setInterval (->
-		EMT.slideRight $content, 8
-	), 10
+	$(document).on 'mousedown', '.direction.right', () ->
+		clearInterval(EMT.slide)
+		$content = $(this).siblings('.content')
+		EMT.slide = setInterval (->
+			EMT.slideRight $content, 8
+		), 10
 
-$(document).on 'mouseenter', '.direction.left', () ->
-	$('.mixCard').popover('hide').removeClass('hover')
-	$content = $(this).siblings('.content')
-	EMT.slide = setInterval (->
-		EMT.slideLeft $content, 4
-	), 10
+	$(document).on 'mousedown', '.direction.left', () ->
+		clearInterval(EMT.slide)
+		$content = $(this).siblings('.content')
+		EMT.slide = setInterval (->
+			EMT.slideLeft $content, 8
+		), 10
 
-$(document).on 'mousedown', '.direction.left', () ->
-	clearInterval(EMT.slide)
-	$content = $(this).siblings('.content')
-	EMT.slide = setInterval (->
-		EMT.slideLeft $content, 8
-	), 10
+	$(document).on 'mouseup', '.direction', () ->
+		clearInterval(EMT.slide)
+		$(this).trigger('mouseenter') 
 
-$(document).on 'mouseup', '.direction', () ->
-	clearInterval(EMT.slide)
-	$(this).trigger('mouseenter') 
+	$(document).on 'mouseleave', '.direction', () ->
+		clearInterval(EMT.slide)
+else
+	hammertime.on 'touch', '.direction.right', () ->
+		clearInterval(EMT.slide)
+		$content = $(this).siblings('.content')
+		EMT.slide = setInterval (->
+			EMT.slideRight $content, 8
+		), 10
 
-$(document).on 'mouseleave', '.direction', () ->
-	clearInterval(EMT.slide)
+	hammertime.on 'touch', '.direction.left', () ->
+		clearInterval(EMT.slide)
+		$content = $(this).siblings('.content')
+		EMT.slide = setInterval (->
+			EMT.slideLeft $content, 8
+		), 10
+
+	hammertime.on 'relase', '.direction', () ->
+		clearInterval(EMT.slide)
+		$(this).trigger('mouseenter') 
+

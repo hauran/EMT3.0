@@ -16,6 +16,7 @@ EMT.trackList
 EMT.currentTrack
 EMT.mixCard
 EMT.slideTransition
+EMT.isTouch = !!('ontouchstart' in window) or !!('onmsgesturechange' in window)
 
 EMT.BaseView = Backbone.View.extend({})
 EMT.BaseModel = Backbone.Model.extend({})
@@ -109,12 +110,14 @@ EMT.PageRouter = Backbone.Router.extend {
 
 hammertime = $(document).hammer()
 
+
 $(document).ready  ->
 	EMT.pageRouter = new EMT.PageRouter()
 	Backbone.history.start {pushState: true}
 
-	$(document).click () ->
-		$('.mixCard').popover('hide')
+	if !EMT.isTouch
+		$(document).click () ->
+			$('.mixCard').popover('hide')
 
 	$window = $(window)
 	lastScrollTop = 0;
