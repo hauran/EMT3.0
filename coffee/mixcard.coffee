@@ -72,7 +72,7 @@ if !EMT.isTouch
 
 	$(document).on 'click', '.mixCard', (event) ->
 		if(!EMT.slideTransition)
-			id = $(this).data('id')
+			id = $(@).data('id')
 			EMT.mixId = id
 			EMT.mixCard.closePopover()
 			EMT.pageRouter.navigate('/mix/' + id + '/1', {trigger:true, replace:true});
@@ -80,7 +80,8 @@ if !EMT.isTouch
 	$(document).on 'click', '.popover ul.mix-tracks li:not(.more)', (event) ->
 		id = $('.mixCard.hover').data('id')
 		EMT.mixId = id
-		track = $(this).index()+1
+		track = $(@).index()+1
+		EMT.mixCard.hidePopover = true
 		EMT.pageRouter.navigate('/mix/' + id + '/' + track, {trigger:true, replace:true});
 
 	$(document).on 'click', '.popover ul.mix-tracks li.more', (event) ->
@@ -90,12 +91,11 @@ if !EMT.isTouch
 
 else
 	hammertime.on 'click', '.mixCard.hover', (event) ->
-		if(!EMT.slideTransition)
-			id = $(this).data('id')
-			EMT.mixId = id
-			EMT.mixCard.hidePopover = true
-			EMT.mixCard.closePopover()
-			EMT.pageRouter.navigate('/mix/' + id + '/1', {trigger:true, replace:true});
+		id = $(@).data('id')
+		EMT.mixId = id
+		EMT.mixCard.hidePopover = true
+		EMT.mixCard.closePopover()
+		EMT.pageRouter.navigate('/mix/' + id + '/1', {trigger:true, replace:true});
 
 	hammertime.on 'tap', '.mixCard:not(.hover)', (event) ->
 		event.stopPropagation()
@@ -121,5 +121,16 @@ else
 				$('<li class="more"><div><i class="icon-sort-down"/></div>more</li>').insertAfter('li.hide-after')
 			$('.popover').insertAfter($(_this).closest('.collection'))
 
+	hammertime.on 'tap', '.popover ul.mix-tracks li:not(.more)', (event) ->
+		id = $('.mixCard.hover').data('id')
+		EMT.mixId = id
+		track = $(@).index()+1
+		EMT.mixCard.hidePopover = true
+		EMT.pageRouter.navigate('/mix/' + id + '/' + track, {trigger:true, replace:true});
+
+	hammertime.on  'tap', '.popover ul.mix-tracks li.more', (event) ->
+		event.stopPropagation()
+		$(@).remove();
+		$('ul.mix-tracks li.hide-after').removeClass('hide-after');
 
 

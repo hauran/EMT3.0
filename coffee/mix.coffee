@@ -1,4 +1,4 @@
-hammertime.on 'tap', 'click', '#mix_stage ul.mix-tracks li', (event) ->
+hammertime.on 'tap', '#mix_stage ul.mix-tracks li', (event) ->
 	EMT.currentTrack = $(this).index()
 	EMT.controls.nextSong()
 	EMT.highlightTrackPlaying()
@@ -7,11 +7,9 @@ hammertime.on 'tap', 'click', '#mix_stage ul.mix-tracks li', (event) ->
 	# track = $(this).index()+1
 	# EMT.pageRouter.navigate('/mix/' + id + '/' + track, {trigger:true, replace:true});
 
-
 hammertime.on 'tap', '#mix_stage #controls .next', (event) ->
 	EMT.controls.nextSong()
 	EMT.highlightTrackPlaying()
-
 
 hammertime.on 'tap', '#mix_stage #controls .play-pause', (event) ->
 	playing = EMT.controls.toggle()
@@ -20,13 +18,11 @@ hammertime.on 'tap', '#mix_stage #controls .play-pause', (event) ->
 	else 
 		$(this).find('i').removeClass('icon-pause').addClass('icon-play')
 
-
 hammertime.on 'tap', '#mix_stage #controls .minimize', (event) ->
 	$('#mix_stage #controls').toggleClass('affixed manual')
 	$('#_EMT').toggleClass('affixed manual')
 	$('#mix_stage .collapse').collapse('toggle');
 	$(this).find('i').toggleClass('icon-double-angle-up').toggleClass('icon-double-angle-down')
-
 
 EMT.loadMix = (currentTrack) ->
 	$('body').removeClass('stop-scrolling')

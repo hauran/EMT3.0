@@ -84,7 +84,7 @@ else
 			EMT.slideLeft $content, 8
 		), 10
 
-	hammertime.on 'relase', '.direction', () ->
+	hammertime.on 'release', '.direction', () ->
 		clearInterval(EMT.slide)
 		$(this).trigger('mouseenter') 
 

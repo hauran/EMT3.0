@@ -20,6 +20,8 @@ EMT.isTouch = false
 if (Modernizr.touch)
    EMT.isTouch = true
 
+# EMT.isTouch = true
+
 EMT.BaseView = Backbone.View.extend({})
 EMT.BaseModel = Backbone.Model.extend({})
 EMT.PageModel = EMT.BaseModel.extend({})
@@ -136,7 +138,7 @@ $(document).ready  ->
 						$('#mix_stage #controls .minimize i').removeClass('icon-double-angle-up').addClass('icon-double-angle-down')
 						$('#_EMT').addClass('affixed')
 				else
-					if(window_top  <= 350) #WHY 350???? NOT SURE
+					if(window_top  <= 320) #WHY 350???? NOT SURE
 						$('#mix_stage #controls').removeClass('affixed auto')
 						$('#mix_stage #controls .minimize i').addClass('icon-double-angle-up').removeClass('icon-double-angle-down')
 						$('#_EMT').removeClass('affixed')
