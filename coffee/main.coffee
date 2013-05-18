@@ -16,7 +16,9 @@ EMT.trackList
 EMT.currentTrack
 EMT.mixCard
 EMT.slideTransition
-EMT.isTouch = !!('ontouchstart' in window) or !!('onmsgesturechange' in window)
+EMT.isTouch = false
+if (Modernizr.touch)
+   EMT.isTouch = true
 
 EMT.BaseView = Backbone.View.extend({})
 EMT.BaseModel = Backbone.Model.extend({})
