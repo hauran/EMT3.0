@@ -12,7 +12,8 @@
 		          "query": {
 		           "sql": "mix_tracks",
 		           "select": {
-		              "limit": 1
+		              "limit": 1,
+		              "YT":true
 		            }
 		          },
 		          "propertyName": "tracks",
