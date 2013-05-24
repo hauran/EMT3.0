@@ -40,6 +40,11 @@ EMT.AjaxCall = (action, data, dataType, type, callback) ->
 		success: callback
 	}
 
+EMT.renderPartial = (jsonData, partial, callback) ->
+	EMT.AjaxCall '/templates/partials/' + partial, {}, 'html', 'GET', (template) ->
+		output = Mustache.render(template, jsonData)		
+		callback(output)
+
 EMT.phoneGapUrl = (url) ->
 	if(EMT.PHONE_GAP)
 		if(url.indexOf('/')!=0)

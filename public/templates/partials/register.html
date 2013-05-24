@@ -1,0 +1,33 @@
+<div id="register" class="narrow">
+  <div class="jumbotron signup-buttons">
+    <h4>Welcome to</h4>
+    <h1>Resippy</h1>
+    <p class="lead">We <span class='icon-heart'></span> Reciprocity</p>
+    <hr>
+    <h4 style='margin-bottom:40px;'>Create your account</h4>
+    <div class="center signup-buttons row-fluid">
+      <div class='icon-user span6'></div>
+      <div class='span6'>
+          <form class='register-form post-form' action='/post/register_account' method='POST'>
+            <input type="hidden" name="nextAction" value="home"/>
+            <input type="text" name='username' class="input-block-level" placeholder="Username">
+            <input type="text" name='email' id='email' class="input-block-level" placeholder="Email">
+            <input type="password"  name='password' id='password' class="input-block-level" placeholder="Password">
+            <br><br>
+
+            <input type="text" name='firstname' class="input-block-level" placeholder="First Name">
+            <input type="text" name='lastname' class="input-block-level" placeholder="Last Name">
+            
+            <button class="btn">Create Account</button>
+          </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // $("#register .post-form").submit(function(){
+  //     var encodedData = $.base64.encode($("#email").val() + ":" + $("#password").val());
+  //     $.cookie(RSPY.LOGIN_COOKIE, encodedData, { expires: 365, path: '/' })
+  // });
+</script>

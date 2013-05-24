@@ -34,6 +34,20 @@ EMT.slideLeft = ($content, speed) ->
 	else 
 		clearInterval(EMT.slide)
 
+EMT.expandLoginSignup = (e) ->
+	e.stopPropagation();
+	e.preventDefault();
+	$cont = $('.sign-up-in')
+	$cont.addClass('expand')
+	$cont.find('.btn.action').hide()
+	$cont.find('.form').empty()
+
+EMT.defaultLoginSignup = () ->
+	$cont = $('.sign-up-in')
+	$cont.removeClass('expand')
+	$cont.find('.btn.action').show()
+	$cont.find('.form').empty()
+
 if !EMT.isTouch
 	$(document).on 'mouseenter', '.direction.right', () ->
 		$('.mixCard').popover('hide').removeClass('hover')
@@ -69,19 +83,36 @@ if !EMT.isTouch
 
 	$(document).on 'mouseleave', '.direction', () ->
 		clearInterval(EMT.slide)
+
+
+	$(document).on 'click', '.joinBtn', (e) ->
+		EMT.expandLoginSignup(e)
+		EMT.pageRouter.navigate 'register', {trigger: false, replace:false}
+
+
+	$(document).on 'click', '.loginBtn', (e) ->
+		EMT.expandLoginSignup(e)
+		$('.sign-up-in').addClass('login')
+		EMT.pageRouter.navigate 'login', {trigger: false, replace:false}
+		EMT.renderPartial {}, 'login.html', (html) ->
+			$('.form').html(html)
+
+	$(document).on 'click', '.sign-up-in .close', (e) ->
+		EMT.defaultLoginSignup()
+		EMT.pageRouter.navigate '/welcome', {trigger: true, replace:false}
 else
 	hammertime.on 'touch', '.direction.right', () ->
 		clearInterval(EMT.slide)
 		$content = $(this).siblings('.content')
 		EMT.slide = setInterval (->
-			EMT.slideRight $content, 8
+			EMT.slideRight $content, 16
 		), 10
 
 	hammertime.on 'touch', '.direction.left', () ->
 		clearInterval(EMT.slide)
 		$content = $(this).siblings('.content')
 		EMT.slide = setInterval (->
-			EMT.slideLeft $content, 8
+			EMT.slideLeft $content, 16
 		), 10
 
 	hammertime.on 'release', '.direction', () ->

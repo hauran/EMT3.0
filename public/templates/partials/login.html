@@ -1,0 +1,29 @@
+<div id="login" class='narrow'>
+  <div class="signup-buttons">
+    <div class='buttons'>
+        <a class="btn btn-large btn-info" href="http://www.facebook.com/dialog/oauth/?client_id=447275615345245&redirect_uri=http://resippy.com/facebookSignIn/&scope=email,user_likes,user_birthday,publish_actions"><i class="icon-facebook signin-icon facebook"></i> Login with Facebook</a>
+    </div>
+    <hr>
+    <form class='login-form post-form' action='post/logon' method='POST'>
+      <input type="hidden" name="nextAction" value="home"/>
+      <input type="email" class="input-block-level" id='email' placeholder="Email">
+      <input type="password" class="input-block-level" id='password' placeholder="Password">
+      <button class="btn btn-large btn-block">Login</button>
+      <a href="#" class='muted pull-right'><small>Forgot your password?</small></a>
+    </form>
+    <div class='clear'></div>
+  </div>
+</div>
+
+<script>
+  // $("#login .post-form").submit(function(){
+  //     var encodedData = $.base64.encode($("#email").val() + ":" + $("#password").val());
+  //     $.cookie(RSPY.LOGIN_COOKIE, encodedData, { expires: 365, path: '/' })
+  // });
+
+  // var decodedData = RSPY.decodedCookie(RSPY.REMEMBER_COOKIE);
+  // if(decodedData != null) {
+  //   $("#email").val(decodedData[0]);
+  //   $("#password").val(decodedData[1]);
+  // }
+</script>

@@ -1,0 +1,77 @@
+.signup-buttons {
+	text-align: center;
+	hr {
+		margin:30px auto;
+	}
+	form {
+		max-width: 250px;
+		margin-left: auto;
+		margin-right: auto;
+	}
+}
+
+#login{
+	a.btn {
+		font-size: 15px;
+		font-weight: bold;
+		margin-right:10px;
+		.signin-icon {
+			font-size:30px;
+			color:#fff;
+		}
+	}
+	.login-form {
+		padding: 24px 23px 30px;
+		&:before{
+			content:normal;
+		}
+		a{
+			margin-top:7px;
+		}
+	}
+}
+
+#register{
+	.icon-user {
+		font-size:200px;
+		color:#999;
+	}
+}
+
+.sign-up-in{
+	position: relative;
+	background-color: #2C3E50;
+	padding:30px;
+	width:320px;
+	margin-top:20px;
+	margin-left:auto;
+	margin-right:auto;
+	.transition();
+	&.expand {
+		.transition();
+		z-index: 1000;
+		width:500px;
+		&.login{
+			height:320px;
+		}
+		.close {
+			display: inline;
+		}
+	}
+	.close {
+		display: none;
+		font-size: 20px;
+		color:#fff;
+		position: absolute;
+		top:10px;
+		right:10px;
+	}
+	.joinBtn {
+		width:150px;
+		margin-right:10px;
+	}	
+
+	// .loginBtn {
+	// 	font-size: 16px;
+	// }
+}
