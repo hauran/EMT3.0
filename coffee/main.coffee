@@ -144,4 +144,12 @@ $(document).ready  ->
 						$('#_EMT').removeClass('affixed')
 
 			lastScrollTop = st
-		
+
+	EMT.renderPartial {}, 'loginSignUp.html', (template) ->
+		$('body').append template
+
+	$(document).on 'click', "[data-toggle='modal']", (e) ->
+		e.preventDefault
+		e.stopPropagation();
+		$('.modal').modal('hide')
+		$($(this).attr('href')).modal('show')

@@ -1,0 +1,96 @@
+<div id="login" class='narrow modal hide'>
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    &nbsp;
+  </div>
+  <div class="modal-body">
+    <div class="signup-buttons">
+      <div class='buttons'>
+          <a class="btn btn-large btn-info" href="http://www.facebook.com/dialog/oauth/?client_id=447275615345245&redirect_uri=http://resippy.com/facebookSignIn/&scope=email,user_likes,user_birthday,publish_actions"><i class="icon-facebook signin-icon facebook"></i> Login with Facebook</a>
+      </div>
+      <hr>
+      <form class='login-form post-form' action='post/logon' method='POST'>
+        <input type="hidden" name="nextAction" value="home"/>
+        <input type="email" class="input-block-level" id='email' placeholder="Email">
+        <input type="password" class="input-block-level" id='password' placeholder="Password">
+        <button class="btn btn-large btn-block">Login</button>
+        <a href="#" class='muted pull-right'><small>Forgot your password?</small></a>
+      </form>
+      <hr>
+      Don't have an account? <a class='joinBtn' href='#signup' data-toggle="modal">Sign up.</a>
+    </div>
+  </div>
+</div>
+
+<script>
+  // $("#login .post-form").submit(function(){
+  //     var encodedData = $.base64.encode($("#email").val() + ":" + $("#password").val());
+  //     $.cookie(RSPY.LOGIN_COOKIE, encodedData, { expires: 365, path: '/' })
+  // });
+
+  // var decodedData = RSPY.decodedCookie(RSPY.REMEMBER_COOKIE);
+  // if(decodedData != null) {
+  //   $("#email").val(decodedData[0]);
+  //   $("#password").val(decodedData[1]);
+  // }
+</script>
+
+
+<div id="signup" class='narrow modal hide'>
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    &nbsp;
+  </div>
+
+  <div class="modal-body">
+    <div class="signup-buttons">
+      <div>Connect with</div>
+      <br>
+      <a class="btn btn-large btn-info" href="http://www.facebook.com/dialog/oauth/?client_id=447275615345245&redirect_uri=http://resippy.com/facebookSignUp/&scope=email,user_likes,user_birthday,publish_actions"><i class="icon-facebook signin-icon facebook"></i> Facebook</a>
+      <hr>
+      or, sign up with <a class='registerBtn' href='#register' data-toggle="modal" >your email address.</a>
+      <hr>
+      Already have an account? <a class='loginBtn' href='#login' data-toggle="modal">Log in.</a>
+    </div>
+  </div>
+</div>
+<br/>
+
+
+
+
+<div id="register" class="narrow modal hide">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    &nbsp;
+  </div>
+  <div class="modal-body">
+    <div class="signup-buttons">
+      <h4 style='margin-bottom:40px;'>Create your account</h4>
+      <div class="center signup-buttons row-fluid">
+        <div class='icon-user span6'></div>
+        <div class='span6'>
+            <form class='login-form post-form' action='/post/register_account' method='POST'>
+              <input type="hidden" name="nextAction" value="home"/>
+              <input type="text" name='username' class="input-block-level" placeholder="Username">
+              <input type="text" name='email' id='email' class="input-block-level" placeholder="Email">
+              <input type="password"  name='password' id='password' class="input-block-level" placeholder="Password">
+              <br><br>
+
+              <input type="text" name='firstname' class="input-block-level" placeholder="First Name">
+              <input type="text" name='lastname' class="input-block-level" placeholder="Last Name">
+              
+              <button class="btn btn-large btn-block">Create Account</button>
+            </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // $("#register .post-form").submit(function(){
+  //     var encodedData = $.base64.encode($("#email").val() + ":" + $("#password").val());
+  //     $.cookie(RSPY.LOGIN_COOKIE, encodedData, { expires: 365, path: '/' })
+  // });
+</script>
